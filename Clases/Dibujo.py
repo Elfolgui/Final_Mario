@@ -1,9 +1,9 @@
 from .Controlador import *
 from .Base import *
 
-def dibujo(ventana, colores):
+def dibujo(ventana, colores, Palabras):
 
     Controlador.rellenar_pantalla(ventana, colores)
-    #Controlador.Pantalla_Final(ventana, Total, Vidas, Monedas, Tiempo, Habilidad)
+    ventana.blit(Palabras[0].Palabra, (Palabras[0].posX, Palabras[0].posY))
     Base.Grupo.draw(ventana)
-    pygame.display.flip()
+    pygame.display.update()

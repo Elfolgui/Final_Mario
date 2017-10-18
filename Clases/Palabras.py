@@ -10,4 +10,5 @@ class Palabra(object):
         self.Palabra = self.Fuente.render(p, True, self.Color)
 
     def Animacion(self, tamanio):
-        self.Fuente = pygame.font.SysFont("mariokartdsregular", tamanio)
+        print(tamanio)
+        self.Fuente = pygame.font.SysFont("mariokartdsregular", 60)
