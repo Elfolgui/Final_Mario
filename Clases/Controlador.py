@@ -39,9 +39,8 @@ class Controlador(object):
                 cls.terminar()
 
     @classmethod
-    def Mostrar(cls, ventana, palabra):
-        print(palabra)
-        ventana.blit(palabra.Palabra, (palabra.posX, palabra.posY))
+    def Mostrar(cls, Corazones):
+        Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
     # @classmethod
     # def Pantalla_Final(cls, ventana, Titulo, Vidas, Monedas, Tiempo, Habilidad):
