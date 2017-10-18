@@ -65,7 +65,6 @@ class Controlador(object):
 
         Corazon = Sprite(200, 250, 40, 40, "Corazon.png")
         Corazon_2 = Sprite(250, 250, 40, 40, "Corazon.png")
-        Corazon_3 = Sprite(300, 250, 40, 40, "Corazon.png")
         Moneda_1 = Sprite(300, 350, 40, 40, "Moneda_1.png")
 
         return Total, Vidas, Monedas, Tiempo, Habilidad
