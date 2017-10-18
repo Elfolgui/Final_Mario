@@ -4,7 +4,9 @@ Controlador.iniciar()
 
 Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255)}
 
-Total, Vidas, Monedas, Tiempo, Habilidad = Controlador.Creador(Colores) #Ranking
+Fuente_1 = 70
+
+Fuente_2 = 50
 
 ancho, alto = 1280, 720
 
@@ -14,13 +16,31 @@ ventana = Controlador.configurar_pantalla(ancho, alto)
 
 Controlador.rellenar_pantalla(ventana, Colores)
 
+Puntos = Palabra(50, 50, Colores["Blanco"], "puntuacion  final", 70)
+
 reloj = Controlador.iniciar_reloj()
 
+frames_totales = 0
+
+tamaño = 50
+
+Corazon = Sprite(200, 250, 40, 40, "Corazon.png")
+Corazon_2 = Sprite(250, 250, 40, 40, "Corazon.png")
+Corazon_3 = Sprite(300, 250, 40, 40, "Corazon.png")
+Moneda_1 = Sprite(300, 350, 40, 40, "Moneda_1.png")
 
 while True:
-
+    # Total = Controlador.Animacion_Puntuacion(Controlador.Regulador(tamaño), Colores)
+    # Vidas = Controlador.Animacion_Vidas(Controlador.Regulador(tamaño), Colores)
+    # Monedas = Controlador.Animacion_Monedas(Controlador.Regulador(tamaño), Colores)
+    # Tiempo = Controlador.Animacion_Tiempo(Controlador.Regulador(tamaño), Colores)
+    # Habilidad = Controlador.Animacion_Habilidad(Controlador.Regulador(tamaño), Colores)
+    Puntos.Animacion(frames_totales)
+    Controlador.Mostrar(ventana, Puntos)
     Controlador.set_fps(reloj, FPS)
     Controlador.buscar_eventos()
-    Controlador.Pantalla_Final(ventana, Total, Vidas, Monedas, Tiempo, Habilidad)
-    dibujo(ventana, Colores, Total, Vidas, Monedas, Tiempo, Habilidad)
+    #Controlador.Pantalla_Final(ventana, Total, Vidas, Monedas, Tiempo, Habilidad)
+    dibujo(ventana, Colores)
     Controlador.set_fps(reloj, FPS)
+    #Controlador.Regulador(tamaño)
+    frames_totales += 1

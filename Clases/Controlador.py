@@ -39,32 +39,50 @@ class Controlador(object):
                 cls.terminar()
 
     @classmethod
-    def Pantalla_Final(cls, ventana, Titulo, Vidas, Monedas, Tiempo, Habilidad):
-        print("Entre")
-        ventana.blit(Titulo, (50, 50))
-        ventana.blit(Vidas, (50, 250))
-        ventana.blit(Monedas, (50, 350))
-        ventana.blit(Tiempo, (50, 450))
-        ventana.blit(Habilidad, (50, 550))
-        #ventana.blit(Ranking, (50, 600))
+    def Mostrar(cls, ventana, palabra):
+        print(palabra)
+        ventana.blit(palabra.Palabra, (palabra.posX, palabra.posY))
 
-    @classmethod
-    def Creador(cls, Colores):
-        #--------------FUENTES-------------------------
-        Puntuacion_Fuente = pygame.font.SysFont("mariokartdsregular", 70)
-        font = pygame.font.SysFont("mariokartdsregular", 50)
-        Total = Puntuacion_Fuente.render("puntuacion final", True, Colores["Blanco"])
-        Vidas = font.render("vidas", True, Colores["Blanco"])
-        Monedas = font.render("monedas", True, Colores["Blanco"])
-        Tiempo = font.render("tiempo", True, Colores["Blanco"])
-        Habilidad = font.render("habilidad", True, Colores["Blanco"])
-        # Ranking = font.render("ranking", True, Colores["Blanco"])
-        Lista_Puntajes = ["puntuacion final", "vidas", "monedas", "tiempo"]
-
-        #-------------SPRITES--------------------------
-
-        Corazon = Sprite(200, 250, 40, 40, "Corazon.png")
-        Corazon_2 = Sprite(250, 250, 40, 40, "Corazon.png")
-        Moneda_1 = Sprite(300, 350, 40, 40, "Moneda_1.png")
-
-        return Total, Vidas, Monedas, Tiempo, Habilidad
+    # @classmethod
+    # def Pantalla_Final(cls, ventana, Titulo, Vidas, Monedas, Tiempo, Habilidad):
+    #     if Titulo is not None:
+    #         ventana.blit(Titulo, (50, 50))
+    #     if Vidas is not None:
+    #         ventana.blit(Vidas, (50, 200))
+    #     if Monedas is not None:
+    #         ventana.blit(Monedas, (50, 300))
+    #     if Tiempo is not None:
+    #         ventana.blit(Tiempo, (50, 400))
+    #     if Habilidad is not None:
+    #         ventana.blit(Habilidad, (50, 500))
+    #     #ventana.blit(Ranking, (50, 600))
+    #
+    # @classmethod
+    # def Regulador(cls, tamaño):
+    #     fuente = pygame.font.SysFont("mariokartdsregular", tamaño)
+    #     return fuente
+    #
+    # @classmethod
+    # def Animacion_Puntuacion(cls, Nuevo_Tamaño, Colores):
+    #     Fuente = Nuevo_Tamaño.render("puntuacion  final", True, Colores["Blanco"])
+    #     return Fuente
+    #
+    # @classmethod
+    # def Animacion_Vidas(cls, Nuevo_Tamaño, Colores):
+    #     Vidas = Nuevo_Tamaño.render("vidas", True, Colores["Blanco"])
+    #     return Vidas
+    #
+    # @classmethod
+    # def Animacion_Monedas(cls, Nuevo_Tamaño, Colores):
+    #     Monedas = Nuevo_Tamaño.render("monedas", True, Colores["Blanco"])
+    #     return Monedas
+    #
+    # @classmethod
+    # def Animacion_Tiempo(cls, Nuevo_Tamaño, Colores):
+    #     Tiempo = Nuevo_Tamaño.render("tiempo", True, Colores["Blanco"])
+    #     return Tiempo
+    #
+    # @classmethod
+    # def Animacion_Habilidad(cls, Nuevo_Tamaño, Colores):
+    #     habilidad = Nuevo_Tamaño.render("habilidad", True, Colores["Blanco"])
+    #     return habilidad
