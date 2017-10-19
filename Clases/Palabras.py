@@ -10,8 +10,7 @@ class Palabra(object):
         self.Fuente = pygame.font.SysFont("mariokartdsregular", self.Tamanio_Final)
         self.Palabra = self.Fuente.render(self.texto, True, self.Color)
 
-    def Animacion(self, tamanio, Color):
-        print(tamanio)
+    def Aparecer(self, tamanio, Color):
         self.Fuente = pygame.font.SysFont("mariokartdsregular", tamanio)
         self.Palabra = self.Fuente.render(self.texto, True, Color)
         self.posX -= 1

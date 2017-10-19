@@ -42,9 +42,23 @@ Corazones = 4
 
 Activar_Mostrar = False
 
-posicion_X = 250
+Activar_Animacion = False
 
 posicion = 0
+
+aux = 0
+
+Respuesta = ""
+
+Corazon_1 = Sprite(250, 200, 40, 40, "Corazon.png")
+Corazon_2 = Sprite(325, 200, 40, 40, "Corazon.png")
+Corazon_3 = Sprite(400, 200, 40, 40, "Corazon.png")
+Corazon_4 = Sprite(475, 200, 40, 40, "Corazon.png")
+Corazon_5 = Sprite(550, 200, 40, 40, "Corazon.png")
+Corazon_6 = Sprite(625, 200, 40, 40, "Corazon.png")
+
+Lista_Corazones = [[Corazon_1, False], [Corazon_2, False], [Corazon_3, False],
+                   [Corazon_4, False], [Corazon_5, False], [Corazon_6, False]]
 
 while True:
     Controlador.set_fps(reloj, FPS)
@@ -56,26 +70,32 @@ while True:
             ventana.blit(i[0].Palabra, (i[0].posX, i[0].posY))
     if frames_totales <= 70 and posicion == 0:
         Palabras[posicion][1] = True
-        Palabras[posicion][0].Animacion(frames_totales, Colores["Blanco"])
-        #ventana.blit(Palabras[posicion].Palabra, (Palabras[posicion].posX, Palabras[posicion].posY))
+        Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
     elif frames_totales > 70 and posicion == 0:
-        #Puntos = Palabras[posicion]
         frames_totales = 0
         posicion += 1
-    elif frames_totales <= 50 and posicion > 0 and posicion < 5:
+    elif frames_totales <= 50 and 0 < posicion < 5:
         Palabras[posicion][1] = True
-        Palabras[posicion][0].Animacion(frames_totales, Colores["Blanco"])
-        #ventana.blit(Palabras[posicion].Palabra, (Palabras[posicion].posX, Palabras[posicion].posY))
-    elif frames_totales > 50 and posicion > 0 and posicion < 5:
+        Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
+    elif frames_totales > 50 and 0 < posicion < 5:
         frames_totales = 0
         posicion += 1
-    if posicion >= 5:
+    if posicion == 5:
         Activar_Mostrar = True
-    if Activar_Mostrar:
-        for Cora in range(Corazones):
-            Corazon = Sprite(posicion_X, 200, 40, 40, "Corazon.png")
-            posicion_X += 50
+        posicion = -1
+    if Activar_Mostrar and Corazones > 0 and frames_totales % 20 == 0:
+        Base.Grupo.add(Lista_Corazones[aux][0])
+        aux += 1
+        Corazones -= 1
+        if Corazones == 0:
+            Activar_Animacion = True
+            aux = 0
+    if Activar_Animacion:
+        for Cora in Lista_Corazones:
+            Respuesta = Cora[0].Animacion(frames_totales)
         Controlador.Mostrar(Corazones)
+    if Respuesta == "Llegue":
+        break
     Base.Grupo.draw(ventana)
     pygame.display.update()
     frames_totales += 1
