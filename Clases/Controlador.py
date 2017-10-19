@@ -38,10 +38,6 @@ class Controlador(object):
             if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
                 cls.terminar()
 
-    @classmethod
-    def Mostrar(cls, Corazones):
-        Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
-
     # @classmethod
     # def Pantalla_Final(cls, ventana, Titulo, Vidas, Monedas, Tiempo, Habilidad):
     #     if Titulo is not None:

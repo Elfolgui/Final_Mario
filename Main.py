@@ -40,13 +40,37 @@ frames_totales = 0
 
 Corazones = 4
 
-Activar_Mostrar = False
+cantidad_monedas = 10
 
-Activar_Animacion = False
+Activar_Mostrar_Corazones = False
+
+Activar_Animacion_Corazones = False
+
+Activar_Preparar_Monedas = False
+
+Activar_Mostrar_Monedas = False
+
+Mostrar_Monedas = False
+
+Activar_Animacion_Monedas = False
 
 posicion = 0
 
+Mostrador = 0
+
+Total_Monedas = 0
+
 aux = 0
+
+frames_animacion_Corazones = 0
+
+frames_mostrar_Corazones = 0
+
+frames_cantidad_Corazones = 0
+
+frames_mostrar_Monedas = 0
+
+frames_cantidad_Monedas = 0
 
 Respuesta = ""
 
@@ -60,14 +84,29 @@ Corazon_6 = Sprite(625, 200, 40, 40, "Corazon.png")
 Lista_Corazones = [[Corazon_1, False], [Corazon_2, False], [Corazon_3, False],
                    [Corazon_4, False], [Corazon_5, False], [Corazon_6, False]]
 
+Lista_Monedas_Activas = []
+Lista_Monedas_Pasivas = []
+
+Total_Monedas = cantidad_monedas
+
 while True:
     Controlador.set_fps(reloj, FPS)
     Controlador.buscar_eventos()
     Controlador.set_fps(reloj, FPS)
     Controlador.rellenar_pantalla(ventana, Colores)
+
     for i in Palabras:
         if i[1]:
             ventana.blit(i[0].Palabra, (i[0].posX, i[0].posY))
+
+    if Mostrar_Monedas:
+        frames_cantidad_Monedas = frames_totales
+        Base.Grupo.add(Lista_Monedas_Activas[Mostrador])
+        Mostrador += 1
+        if Total_Monedas == Mostrador:
+            Mostrar_Monedas = False
+            Activar_Animacion_Corazones = True
+
     if frames_totales <= 70 and posicion == 0:
         Palabras[posicion][1] = True
         Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
@@ -81,19 +120,39 @@ while True:
         frames_totales = 0
         posicion += 1
     if posicion == 5:
-        Activar_Mostrar = True
+        Activar_Mostrar_Corazones = True
+        frames_mostrar = frames_totales
         posicion = -1
-    if Activar_Mostrar and Corazones > 0 and frames_totales % 20 == 0:
+
+    if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 25 < frames_totales:
+        frames_cantidad_Corazones = frames_totales
         Base.Grupo.add(Lista_Corazones[aux][0])
         aux += 1
         Corazones -= 1
         if Corazones == 0:
-            Activar_Animacion = True
+            frames_animacion_Corazones = frames_totales
+            Activar_Preparar_Monedas = True
             aux = 0
-    if Activar_Animacion:
+
+    if Activar_Preparar_Monedas and frames_mostrar_Monedas + 10 < frames_totales:
+        frames_mostrar_Monedas = frames_totales
+        Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
+        Lista_Monedas_Pasivas.append(Moneda_1)
+        cantidad_monedas -= 1
+        if cantidad_monedas <= 0:
+            Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
+            Base.Grupo.add(Moneda_1)
+            Activar_Preparar_Monedas = False
+            Activar_Mostrar_Monedas = True
+
+    if Activar_Mostrar_Monedas:
+        for Moneda in Lista_Monedas_Pasivas:
+            Mostrar_Monedas = True
+            Lista_Monedas_Activas.append(Moneda)
+
+    if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
         for Cora in Lista_Corazones:
-            Respuesta = Cora[0].Animacion(frames_totales)
-        Controlador.Mostrar(Corazones)
+            Respuesta = Cora[0].Animacion_Corazones(frames_totales)
     if Respuesta == "Llegue":
         break
     Base.Grupo.draw(ventana)
