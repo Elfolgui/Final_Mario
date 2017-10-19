@@ -43,6 +43,8 @@ Corazones = 4
 
 cantidad_monedas = 10
 
+Blitea = False
+
 Activar_Mostrar_Corazones = False
 
 Activar_Animacion_Corazones = False
@@ -72,6 +74,8 @@ frames_cantidad_Corazones = 0
 frames_mostrar_Monedas = 0
 
 frames_cantidad_Monedas = 0
+
+frames_animacion_Monedas = 0
 
 Respuesta = ""
 
@@ -104,18 +108,26 @@ while True:
         if i[1]:
             ventana.blit(i[0].Palabra, (i[0].posX, i[0].posY))
 
-    if Mostrar_Monedas:
+    if Mostrar_Monedas and frames_cantidad_Monedas + 10 < frames_totales:
+        Blitea = True
         frames_cantidad_Monedas = frames_totales
         Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
         Base.Grupo.add(Lista_Monedas_Activas[Mostrador])
-        ventana.blit(x.Palabra, (x.posX, x.posY))
-        ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
         if Mostrador != Total_Monedas:
             Mostrador += 1
         if Total_Monedas == Mostrador:
             Mostrar_Monedas = False
-            Activar_Animacion_Corazones = True
+            Activar_Animacion_Monedas = True
 
+    if Activar_Animacion_Monedas and frames_animacion_Monedas + 5 < frames_totales:
+        frames_animacion_Monedas = frames_totales
+        for selector in Lista_Monedas_Activas:
+            if selector.Animacion_Monedas(frames_totales):
+                Activar_Animacion_Corazones = True
+
+    if Blitea:
+        ventana.blit(x.Palabra, (x.posX, x.posY))
+        ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
     if frames_totales <= 70 and posicion == 0:
         Palabras[posicion][1] = True
         Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
@@ -162,7 +174,6 @@ while True:
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
         for Cora in Lista_Corazones:
             Respuesta = Cora[0].Animacion_Corazones(frames_totales)
-    if Respuesta == "Llegue":
-        break
+
     pygame.display.update()
     frames_totales += 1
