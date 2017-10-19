@@ -12,7 +12,9 @@ ancho, alto = 1280, 720
 
 FPS = 120
 
-ventana = Controlador.configurar_pantalla(ancho, alto)
+#Fondo = Sprite(0,0, 1360, 768, "Fondo.png")
+
+ventana = Controlador.configurar_pantalla()
 
 Controlador.rellenar_pantalla(ventana, Colores)
 
@@ -24,7 +26,6 @@ T_5 = pygame.font.SysFont("mariokartdsregular", 56)
 T_6 = pygame.font.SysFont("mariokartdsregular", 70)
 
 Lista = [T_1,T_2,T_3,T_4,T_5,T_6]
-
 
 Puntos = Palabra(120, 50, Colores["Blanco"], "puntuacion  final", 0)
 Vidas = Palabra(100, 200, Colores["Blanco"], "vidas", 0)
@@ -89,11 +90,15 @@ Lista_Monedas_Pasivas = []
 
 Total_Monedas = cantidad_monedas
 
+x = Palabra(350, 305, Colores["Blanco"], "x", 40)
+
 while True:
     Controlador.set_fps(reloj, FPS)
     Controlador.buscar_eventos()
     Controlador.set_fps(reloj, FPS)
     Controlador.rellenar_pantalla(ventana, Colores)
+    #ventana.blit(Fondo.image, Fondo.rect)
+    Base.Grupo.draw(ventana)
 
     for i in Palabras:
         if i[1]:
@@ -101,8 +106,12 @@ while True:
 
     if Mostrar_Monedas:
         frames_cantidad_Monedas = frames_totales
+        Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
         Base.Grupo.add(Lista_Monedas_Activas[Mostrador])
-        Mostrador += 1
+        ventana.blit(x.Palabra, (x.posX, x.posY))
+        ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
+        if Mostrador != Total_Monedas:
+            Mostrador += 1
         if Total_Monedas == Mostrador:
             Mostrar_Monedas = False
             Activar_Animacion_Corazones = True
@@ -134,7 +143,7 @@ while True:
             Activar_Preparar_Monedas = True
             aux = 0
 
-    if Activar_Preparar_Monedas and frames_mostrar_Monedas + 10 < frames_totales:
+    if Activar_Preparar_Monedas:
         frames_mostrar_Monedas = frames_totales
         Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
         Lista_Monedas_Pasivas.append(Moneda_1)
@@ -146,8 +155,8 @@ while True:
             Activar_Mostrar_Monedas = True
 
     if Activar_Mostrar_Monedas:
+        Mostrar_Monedas = True
         for Moneda in Lista_Monedas_Pasivas:
-            Mostrar_Monedas = True
             Lista_Monedas_Activas.append(Moneda)
 
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
@@ -155,6 +164,5 @@ while True:
             Respuesta = Cora[0].Animacion_Corazones(frames_totales)
     if Respuesta == "Llegue":
         break
-    Base.Grupo.draw(ventana)
     pygame.display.update()
     frames_totales += 1
