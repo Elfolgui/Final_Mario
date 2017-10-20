@@ -107,7 +107,7 @@ Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
 Cero_Extra = Palabra(230, 400, Colores["Blanco"], "0", 50)
-Cero_Extra_2 = Palabra(350, 400, Colores["Blanco"], "0", 50)
+Cero_Extra_2 = Palabra(355, 400, Colores["Blanco"], "0", 50)
 
 #Reloj = Sprite(300 , 400, 40, 40, "Reloj.png")
 
@@ -115,7 +115,7 @@ M = 0
 
 S = 0
 
-Segundos = 130
+Segundos = 126
 
 posx = Moneda.rect.x
 posy = Moneda.rect.y
@@ -147,15 +147,17 @@ while True:
             Activar_Mostrar_Tiempo = True
 
     if Activar_Mostrar_Tiempo:
+        Cero_mas = True
         S += 1
         if S == 60:
             M += 1
             S -= 60
         if S + (M * 60) == Segundos:
-            if M < 10:
-                Cero_mas = True
+            if M > 10:
+                Cero_mas = False
             if S < 10:
                 Cero_mas_2 = True
+                Cero_Extra_2.posX -= 40
             Activar_Animacion_Corazones = True
             Activar_Mostrar_Tiempo = False
         Tiempo_Segundos = Palabra(320, 400, Colores["Blanco"], str(S), 50)
@@ -164,6 +166,7 @@ while True:
         blitea_2 = True
 
     if Activar_Animacion_Tiempo:
+        Cero_mas_2 = False
         S -= 1
         if M == 0:
             termine = True
@@ -192,13 +195,15 @@ while True:
             Base.Grupo.remove(Moneda_1)
             Activar_Animacion_Tiempo = True
 
-    if blitea_2:
+    if blitea_2 and not Cero_mas_2:
         ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
         ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
     if Cero_mas:
         ventana.blit(Cero_Extra.Palabra, (Cero_Extra.posX, Cero_Extra.posY))
     if Cero_mas_2:
         ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
+        ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+        ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 25, Tiempo_Segundos.posY))
 
     if Blitea:
         ventana.blit(x.Palabra, (x.posX, x.posY))
