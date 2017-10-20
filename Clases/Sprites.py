@@ -34,6 +34,3 @@ class Sprite(Base):
             self.rect.x = posx
             self.rect.y = posy
             return True
-
-    def Animacion_Tiempo(self):
-        pass
