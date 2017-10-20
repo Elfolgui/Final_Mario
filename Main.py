@@ -89,7 +89,7 @@ frames_animacion_Monedas = 0
 
 Respuesta = ""
 
-Dos_Puntos = Sprite(265, 398, 20, 40, "Puntos.png")
+Dos_Puntos = Sprite(270, 398, 20, 40, "Puntos.png")
 
 Corazon_1 = Sprite(250, 200, 40, 40, "Corazon.png")
 Corazon_2 = Sprite(325, 200, 40, 40, "Corazon.png")
@@ -160,7 +160,6 @@ while True:
     if Activar_Animacion_Tiempo:
         S -= 1
         if M == 0:
-            print("Enter")
             termine = True
         if termine and S == 0:
             S = 0
@@ -230,19 +229,10 @@ while True:
         Mostrar_Monedas = True
 
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
-        if Base.Grupo.has(Corazon):
-            Base.Grupo.remove(Lista_Corazones[aux][0])
-            Respuesta = Corazon.Animacion_Corazones(frames_totales, aux)
-            if Respuesta:
-                Base.Grupo.remove(Corazon)
-                aux -= 1
-                Corazon = Sprite(625, 200, 40, 40, "Corazon.png")
-                Corazon.rect.x = Lista_Corazones[aux][0].rect.x
-                Corazon.rect.y = Lista_Corazones[aux][0].rect.y
-        else:
-            Base.Grupo.add(Corazon)
+        for Cora in Lista_Corazones:
+            Respuesta = Cora[0].Animacion_Corazones(frames_totales, ventana)
 
-    if aux < 0 and Respuesta:
+    if Respuesta:
         frames_cantidad_Monedas = frames_totales
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
