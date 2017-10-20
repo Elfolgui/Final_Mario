@@ -16,15 +16,6 @@ ventana = Controlador.configurar_pantalla(ancho, alto)
 
 Controlador.rellenar_pantalla(ventana, Colores)
 
-T_1 = pygame.font.SysFont("mariokartdsregular", 0)
-T_2 = pygame.font.SysFont("mariokartdsregular", 14)
-T_3 = pygame.font.SysFont("mariokartdsregular", 28)
-T_4 = pygame.font.SysFont("mariokartdsregular", 42)
-T_5 = pygame.font.SysFont("mariokartdsregular", 56)
-T_6 = pygame.font.SysFont("mariokartdsregular", 70)
-
-Lista = [T_1,T_2,T_3,T_4,T_5,T_6]
-
 Puntos = Palabra(120, 50, Colores["Blanco"], "puntuacion  final", 0)
 Vidas = Palabra(100, 200, Colores["Blanco"], "vidas", 0)
 Monedas = Palabra(100, 300, Colores["Blanco"], "monedas", 0)
@@ -75,6 +66,14 @@ aux = 0
 
 aux2 = 0
 
+Cero_mas = False
+
+Cero_mas_2 = False
+
+Cero_mas_3 = False
+
+Cero_mas_4 = False
+
 frames_animacion_Corazones = 0
 
 frames_mostrar_Corazones = 0
@@ -89,7 +88,7 @@ frames_animacion_Monedas = 0
 
 Respuesta = ""
 
-Dos_Puntos = Sprite(270, 398, 20, 40, "Puntos.png")
+Dos_Puntos = Sprite(290, 398, 20, 40, "Puntos.png")
 
 Corazon_1 = Sprite(250, 200, 40, 40, "Corazon.png")
 Corazon_2 = Sprite(325, 200, 40, 40, "Corazon.png")
@@ -106,6 +105,9 @@ Lista_Monedas_Pasivas = []
 
 Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
+
+Cero_Extra = Palabra(230, 400, Colores["Blanco"], "0", 50)
+Cero_Extra_2 = Palabra(350, 400, Colores["Blanco"], "0", 50)
 
 #Reloj = Sprite(300 , 400, 40, 40, "Reloj.png")
 
@@ -150,10 +152,14 @@ while True:
             M += 1
             S -= 60
         if S + (M * 60) == Segundos:
+            if M < 10:
+                Cero_mas = True
+            if S < 10:
+                Cero_mas_2 = True
             Activar_Animacion_Corazones = True
             Activar_Mostrar_Tiempo = False
-        Tiempo_Segundos = Palabra(300, 400, Colores["Blanco"], str(S), 50)
-        Tiempo_Minutos = Palabra(240, 400, Colores["Blanco"], str(M), 50)
+        Tiempo_Segundos = Palabra(320, 400, Colores["Blanco"], str(S), 50)
+        Tiempo_Minutos = Palabra(260, 400, Colores["Blanco"], str(M), 50)
         Base.Grupo.add(Dos_Puntos)
         blitea_2 = True
 
@@ -163,12 +169,13 @@ while True:
             termine = True
         if termine and S == 0:
             S = 0
+            Cero_mas_2 = True
             Activar_Animacion_Tiempo = False
         if S == 0 and not termine:
             M -= 1
             S = 60
-        Tiempo_Segundos = Palabra(300, 400, Colores["Blanco"], str(S), 50)
-        Tiempo_Minutos = Palabra(240, 400, Colores["Blanco"], str(M), 50)
+        Tiempo_Segundos = Palabra(320, 400, Colores["Blanco"], str(S), 50)
+        Tiempo_Minutos = Palabra(260, 400, Colores["Blanco"], str(M), 50)
 
     if Activar_Animacion_Monedas and Total_Monedas >= 0:
         if Base.Grupo.has(Moneda):
@@ -188,6 +195,10 @@ while True:
     if blitea_2:
         ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
         ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
+    if Cero_mas:
+        ventana.blit(Cero_Extra.Palabra, (Cero_Extra.posX, Cero_Extra.posY))
+    if Cero_mas_2:
+        ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
 
     if Blitea:
         ventana.blit(x.Palabra, (x.posX, x.posY))
