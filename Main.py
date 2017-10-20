@@ -14,7 +14,7 @@ FPS = 120
 
 #Fondo = Sprite(0,0, 1360, 768, "Fondo.png")
 
-ventana = Controlador.configurar_pantalla()
+ventana = Controlador.configurar_pantalla(ancho, alto)
 
 Controlador.rellenar_pantalla(ventana, Colores)
 
@@ -108,7 +108,7 @@ while True:
         if i[1]:
             ventana.blit(i[0].Palabra, (i[0].posX, i[0].posY))
 
-    if Mostrar_Monedas and frames_cantidad_Monedas + 10 < frames_totales:
+    if Mostrar_Monedas and frames_cantidad_Monedas + 7 < frames_totales:
         Blitea = True
         frames_cantidad_Monedas = frames_totales
         Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
@@ -117,17 +117,19 @@ while True:
             Mostrador += 1
         if Total_Monedas == Mostrador:
             Mostrar_Monedas = False
-            Activar_Animacion_Monedas = True
+            Activar_Animacion_Corazones = True
 
-    if Activar_Animacion_Monedas and frames_animacion_Monedas + 5 < frames_totales:
+    if Activar_Animacion_Monedas and frames_animacion_Monedas + 20 < frames_totales:
+        if posicion == -1 or posicion == 0:
+            posicion = Total_Monedas
         frames_animacion_Monedas = frames_totales
-        for selector in Lista_Monedas_Activas:
-            if selector.Animacion_Monedas(frames_totales):
-                Activar_Animacion_Corazones = True
+        Lista_Monedas_Activas[posicion].Animacion_Monedas(frames_totales)
+        posicion -= 1
 
     if Blitea:
         ventana.blit(x.Palabra, (x.posX, x.posY))
         ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
+
     if frames_totales <= 70 and posicion == 0:
         Palabras[posicion][1] = True
         Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
@@ -174,6 +176,11 @@ while True:
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
         for Cora in Lista_Corazones:
             Respuesta = Cora[0].Animacion_Corazones(frames_totales)
+
+    if Respuesta:
+        print("Entre")
+        Activar_Animacion_Corazones = False
+        Activar_Animacion_Monedas = True
 
     pygame.display.update()
     frames_totales += 1
