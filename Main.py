@@ -12,8 +12,6 @@ ancho, alto = 1280, 720
 
 FPS = 120
 
-#Fondo = Sprite(0,0, 1360, 768, "Fondo.png")
-
 ventana = Controlador.configurar_pantalla(ancho, alto)
 
 Controlador.rellenar_pantalla(ventana, Colores)
@@ -45,6 +43,8 @@ cantidad_monedas = 10
 
 Blitea = False
 
+blitea_2 = False
+
 Activar_Mostrar_Corazones = False
 
 Activar_Animacion_Corazones = False
@@ -57,6 +57,14 @@ Mostrar_Monedas = False
 
 Activar_Animacion_Monedas = False
 
+Activar_Animacion_Tiempo = False
+
+Activar_Mostrar_Tiempo = False
+
+restando = False
+
+termine = False
+
 posicion = 0
 
 Mostrador = 0
@@ -64,6 +72,8 @@ Mostrador = 0
 Total_Monedas = 0
 
 aux = 0
+
+aux2 = 0
 
 frames_animacion_Corazones = 0
 
@@ -78,6 +88,8 @@ frames_cantidad_Monedas = 0
 frames_animacion_Monedas = 0
 
 Respuesta = ""
+
+Dos_Puntos = Sprite(265, 398, 20, 40, "Puntos.png")
 
 Corazon_1 = Sprite(250, 200, 40, 40, "Corazon.png")
 Corazon_2 = Sprite(325, 200, 40, 40, "Corazon.png")
@@ -95,10 +107,16 @@ Lista_Monedas_Pasivas = []
 Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
+#Reloj = Sprite(300 , 400, 40, 40, "Reloj.png")
+
+M = 0
+
+S = 0
+
+Segundos = 130
+
 posx = Moneda.rect.x
 posy = Moneda.rect.y
-ancho = Moneda.ancho
-alto = Moneda.alto
 
 Total_Monedas = cantidad_monedas
 
@@ -109,7 +127,6 @@ while True:
     Controlador.buscar_eventos()
     Controlador.set_fps(reloj, FPS)
     Controlador.rellenar_pantalla(ventana, Colores)
-    #ventana.blit(Fondo.image, Fondo.rect)
     Base.Grupo.draw(ventana)
 
     for i in Palabras:
@@ -120,23 +137,58 @@ while True:
         Blitea = True
         frames_cantidad_Monedas = frames_totales
         Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
-        if Mostrador != Total_Monedas:
+        if Mostrador != Total_Monedas + 1:
             Mostrador += 1
-        if Total_Monedas == Mostrador:
+        if Total_Monedas + 1 == Mostrador:
+            Mostrador = 10
             Mostrar_Monedas = False
-            Activar_Animacion_Corazones = True
+            Activar_Mostrar_Tiempo = True
 
-    if Activar_Animacion_Monedas and frames_animacion_Monedas < frames_totales and Total_Monedas > 0:
+    if Activar_Mostrar_Tiempo:
+        S += 1
+        if S == 60:
+            M += 1
+            S -= 60
+        if S + (M * 60) == Segundos:
+            Activar_Animacion_Corazones = True
+            Activar_Mostrar_Tiempo = False
+        Tiempo_Segundos = Palabra(300, 400, Colores["Blanco"], str(S), 50)
+        Tiempo_Minutos = Palabra(240, 400, Colores["Blanco"], str(M), 50)
+        Base.Grupo.add(Dos_Puntos)
+        blitea_2 = True
+
+    if Activar_Animacion_Tiempo:
+        S -= 1
+        if M == 0:
+            print("Enter")
+            termine = True
+        if termine and S == 0:
+            S = 0
+            Activar_Animacion_Tiempo = False
+        if S == 0 and not termine:
+            M -= 1
+            S = 60
+        Tiempo_Segundos = Palabra(300, 400, Colores["Blanco"], str(S), 50)
+        Tiempo_Minutos = Palabra(240, 400, Colores["Blanco"], str(M), 50)
+
+    if Activar_Animacion_Monedas and Total_Monedas >= 0:
         if Base.Grupo.has(Moneda):
             frames_animacion_Monedas = frames_totales
-            if Moneda.Animacion_Monedas(frames_totales, posx, posy, ancho, alto) == "Llegue":
+            if Moneda.Animacion_Monedas(posx, posy):
+                Mostrador -= 1
+                Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
                 Total_Monedas -= 1
         else:
             Base.Grupo.add(Moneda)
-        if Total_Monedas == 0:
+        if Total_Monedas == -1:
             Blitea = False
             Base.Grupo.remove(Moneda)
             Base.Grupo.remove(Moneda_1)
+            Activar_Animacion_Tiempo = True
+
+    if blitea_2:
+        ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+        ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
 
     if Blitea:
         ventana.blit(x.Palabra, (x.posX, x.posY))
@@ -165,9 +217,12 @@ while True:
         aux += 1
         Corazones -= 1
         if Corazones == 0:
+            Corazon = Sprite(625, 200, 40, 40, "Corazon.png")
+            Corazon.rect.x = Lista_Corazones[aux][0].rect.x
+            Corazon.rect.y = Lista_Corazones[aux][0].rect.y
             frames_animacion_Corazones = frames_totales
             Activar_Preparar_Monedas = True
-            aux = 0
+            aux = 3
 
     if Activar_Preparar_Monedas:
         Base.Grupo.add(Moneda_1)
@@ -175,10 +230,20 @@ while True:
         Mostrar_Monedas = True
 
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
-        for Cora in Lista_Corazones:
-            Respuesta = Cora[0].Animacion_Corazones(frames_totales)
+        if Base.Grupo.has(Corazon):
+            Base.Grupo.remove(Lista_Corazones[aux][0])
+            Respuesta = Corazon.Animacion_Corazones(frames_totales, aux)
+            if Respuesta:
+                Base.Grupo.remove(Corazon)
+                aux -= 1
+                Corazon = Sprite(625, 200, 40, 40, "Corazon.png")
+                Corazon.rect.x = Lista_Corazones[aux][0].rect.x
+                Corazon.rect.y = Lista_Corazones[aux][0].rect.y
+        else:
+            Base.Grupo.add(Corazon)
 
-    if Respuesta:
+    if aux < 0 and Respuesta:
+        frames_cantidad_Monedas = frames_totales
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
 
