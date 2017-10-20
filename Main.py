@@ -92,6 +92,14 @@ Lista_Corazones = [[Corazon_1, False], [Corazon_2, False], [Corazon_3, False],
 Lista_Monedas_Activas = []
 Lista_Monedas_Pasivas = []
 
+Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
+Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
+
+posx = Moneda.rect.x
+posy = Moneda.rect.y
+ancho = Moneda.ancho
+alto = Moneda.alto
+
 Total_Monedas = cantidad_monedas
 
 x = Palabra(350, 305, Colores["Blanco"], "x", 40)
@@ -112,19 +120,23 @@ while True:
         Blitea = True
         frames_cantidad_Monedas = frames_totales
         Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
-        Base.Grupo.add(Lista_Monedas_Activas[Mostrador])
         if Mostrador != Total_Monedas:
             Mostrador += 1
         if Total_Monedas == Mostrador:
             Mostrar_Monedas = False
             Activar_Animacion_Corazones = True
 
-    if Activar_Animacion_Monedas and frames_animacion_Monedas + 20 < frames_totales:
-        if posicion == -1 or posicion == 0:
-            posicion = Total_Monedas
-        frames_animacion_Monedas = frames_totales
-        Lista_Monedas_Activas[posicion].Animacion_Monedas(frames_totales)
-        posicion -= 1
+    if Activar_Animacion_Monedas and frames_animacion_Monedas < frames_totales and Total_Monedas > 0:
+        if Base.Grupo.has(Moneda):
+            frames_animacion_Monedas = frames_totales
+            if Moneda.Animacion_Monedas(frames_totales, posx, posy, ancho, alto) == "Llegue":
+                Total_Monedas -= 1
+        else:
+            Base.Grupo.add(Moneda)
+        if Total_Monedas == 0:
+            Blitea = False
+            Base.Grupo.remove(Moneda)
+            Base.Grupo.remove(Moneda_1)
 
     if Blitea:
         ventana.blit(x.Palabra, (x.posX, x.posY))
@@ -158,27 +170,15 @@ while True:
             aux = 0
 
     if Activar_Preparar_Monedas:
-        frames_mostrar_Monedas = frames_totales
-        Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
-        Lista_Monedas_Pasivas.append(Moneda_1)
-        cantidad_monedas -= 1
-        if cantidad_monedas <= 0:
-            Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
-            Base.Grupo.add(Moneda_1)
-            Activar_Preparar_Monedas = False
-            Activar_Mostrar_Monedas = True
-
-    if Activar_Mostrar_Monedas:
+        Base.Grupo.add(Moneda_1)
+        Activar_Preparar_Monedas = False
         Mostrar_Monedas = True
-        for Moneda in Lista_Monedas_Pasivas:
-            Lista_Monedas_Activas.append(Moneda)
 
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
         for Cora in Lista_Corazones:
             Respuesta = Cora[0].Animacion_Corazones(frames_totales)
 
     if Respuesta:
-        print("Entre")
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
 
