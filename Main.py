@@ -58,6 +58,8 @@ Activar_Mostrar_Puntos_Habilidad = False
 
 Activar_Animacion_Puntos_Habilidad = False
 
+Activar_Mostrar_Puntos_Totales = False
+
 restando = False
 
 termine = False
@@ -121,6 +123,8 @@ Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Cero_Extra = Palabra(230, 500, Colores["Blanco"], "0", 50)
 Cero_Extra_2 = Palabra(355, 500, Colores["Blanco"], "0", 50)
 
+Puntos_Totales = 0
+
 #Reloj = Sprite(300 , 400, 40, 40, "Reloj.png")
 
 M = 0
@@ -137,6 +141,8 @@ posy = Moneda.rect.y
 Total_Monedas = cantidad_monedas
 
 Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
+
+Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 70)
 
 x = Palabra(350, 305, Colores["Blanco"], "x", 40)
 
@@ -164,9 +170,15 @@ while True:
         frames_totales = 0
         posicion += 1
     if posicion == 5:
-        Activar_Mostrar_Corazones = True
+        Activar_Mostrar_Puntos_Totales = True
         frames_mostrar = frames_totales
         posicion = -1
+
+    if Activar_Mostrar_Puntos_Totales:
+        if not Activar_Mostrar_Corazones:
+            frames_cantidad_Corazones = frames_totales
+            Activar_Mostrar_Corazones = True
+        ventana.blit(Puntuacion_Total.Palabra, (Puntuacion_Total.posX, Puntuacion_Total.posY))
 
     if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 25 < frames_totales:
         frames_cantidad_Corazones = frames_totales
@@ -184,7 +196,10 @@ while True:
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
         for Cora in Lista_Corazones:
             Respuesta = Cora[0].Animacion_Corazones(frames_totales, ventana)
-
+            if Cora[0].rect.y < 50 and Cora[0].rect.x > 850:
+                Base.Grupo.remove(Cora[0])
+                Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 50)
+                Puntos_Totales += 1000
     if Respuesta:
         frames_cantidad_Monedas = frames_totales
         Activar_Animacion_Corazones = False
@@ -241,8 +256,10 @@ while True:
         blitea_2 = True
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 20 < frames_totales:
+        Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 50)
         Cero_mas_2 = False
         S -= 1
+        Puntos_Totales - S
         if M == 0:
             termine = True
         if termine and S == 0:

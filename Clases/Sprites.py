@@ -17,10 +17,9 @@ class Sprite(Base):
             self.alto -= 1
             self.image = pygame.image.load("Corazon.png")
             self.image = pygame.transform.scale(self.image, (self.ancho, self.alto))
-
             if self.ancho <= 0 and self.alto <= 0:
                 return True
-        if self.rect.x > 800:
+        if self.rect.x > 650:
             self.rect.y -= 6
             self.rect.x += 4
 
