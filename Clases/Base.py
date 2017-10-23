@@ -4,6 +4,7 @@ from .Grupo_Sprites import *
 class Base(pygame.sprite.Sprite):
 
     Grupo = Sprites()
+    Corazones = Sprites()
 
     def __init__(self, x, y, ancho, alto, ruta):
         pygame.sprite.Sprite.__init__(self)

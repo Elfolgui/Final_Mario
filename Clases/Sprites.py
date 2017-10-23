@@ -6,9 +6,9 @@ class Sprite(Base):
         Base.__init__(self, x, y, ancho, alto, ruta)
 
     def Animacion_Corazones(self, frames_totales, ventana):
-        if self.rect.x <= 800:
+        if self.rect.x <= 750:
             self.rect.x += 6
-        if frames_totales % 5 == 0 and self.ancho > 0 and self.alto > 0:
+        if frames_totales % 7 == 0 and self.ancho > 0 and self.alto > 0:
             self.ancho -= 1
             self.alto -= 1
             self.image = pygame.transform.scale(self.image, (self.ancho, self.alto))
@@ -17,11 +17,9 @@ class Sprite(Base):
             self.alto -= 1
             self.image = pygame.image.load("Corazon.png")
             self.image = pygame.transform.scale(self.image, (self.ancho, self.alto))
-            if self.ancho <= 0 and self.alto <= 0:
-                return True
-        if self.rect.x > 650:
+        if self.rect.x > 750:
             self.rect.y -= 6
-            self.rect.x += 4
+            self.rect.x += 2
 
     def Animacion_Monedas(self, posx, posy):
         self.rect.y -= 15

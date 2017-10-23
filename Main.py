@@ -142,7 +142,7 @@ Total_Monedas = cantidad_monedas
 
 Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
 
-Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 70)
+Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
 x = Palabra(350, 305, Colores["Blanco"], "x", 40)
 
@@ -175,7 +175,7 @@ while True:
         posicion = -1
 
     if Activar_Mostrar_Puntos_Totales:
-        if not Activar_Mostrar_Corazones:
+        if not Activar_Mostrar_Corazones and frames_totales < 200:
             frames_cantidad_Corazones = frames_totales
             Activar_Mostrar_Corazones = True
         ventana.blit(Puntuacion_Total.Palabra, (Puntuacion_Total.posX, Puntuacion_Total.posY))
@@ -183,6 +183,7 @@ while True:
     if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 25 < frames_totales:
         frames_cantidad_Corazones = frames_totales
         Base.Grupo.add(Lista_Corazones[aux][0])
+        Base.Corazones.add(Lista_Corazones[aux][0])
         aux += 1
         Corazones -= 1
         if Corazones == 0:
@@ -191,19 +192,22 @@ while True:
             Corazon.rect.y = Lista_Corazones[aux][0].rect.y
             frames_animacion_Corazones = frames_totales
             Activar_Preparar_Monedas = True
+            Activar_Mostrar_Corazones = False
             aux = 3
 
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
-        for Cora in Lista_Corazones:
-            Respuesta = Cora[0].Animacion_Corazones(frames_totales, ventana)
-            if Cora[0].rect.y < 30 and Cora[0].rect.x > 900:
-                print("Entre")
-                Base.Grupo.remove(Cora[0])
-                Corazones -= 1
+        for Cora in Base.Corazones:
+            Cora.Animacion_Corazones(frames_totales, ventana)
+            if Cora.rect.y < 100 and Cora.rect.x > 700:
+                Base.Grupo.remove(Cora)
+                Base.Corazones.remove(Cora)
+                Puntos_Totales += 1000
+                Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+        if len(Base.Corazones.sprites()) == 0:
+            Respuesta = True
+
     if Respuesta:
-        Puntos_Totales += 3000
-        Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 50)
-        frames_cantidad_Monedas = frames_totales
+        print("Entre")
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
 
@@ -258,7 +262,7 @@ while True:
         blitea_2 = True
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 20 < frames_totales:
-        Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 50)
+        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Cero_mas_2 = False
         S -= 1
         Puntos_Totales - S
