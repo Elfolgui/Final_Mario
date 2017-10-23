@@ -196,11 +196,13 @@ while True:
     if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
         for Cora in Lista_Corazones:
             Respuesta = Cora[0].Animacion_Corazones(frames_totales, ventana)
-            if Cora[0].rect.y < 50 and Cora[0].rect.x > 850:
+            if Cora[0].rect.y < 30 and Cora[0].rect.x > 900:
+                print("Entre")
                 Base.Grupo.remove(Cora[0])
-                Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 50)
-                Puntos_Totales += 1000
+                Corazones -= 1
     if Respuesta:
+        Puntos_Totales += 3000
+        Puntuacion_Total = Palabra(780, 50, Colores["Blanco"], str(Puntos_Totales), 50)
         frames_cantidad_Monedas = frames_totales
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
