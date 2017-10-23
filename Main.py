@@ -84,6 +84,8 @@ Cero_mas_3 = False
 
 Cero_mas_4 = False
 
+Hacer_Cuentas = False
+
 frames_animacion_Corazones = 0
 
 frames_mostrar_Corazones = 0
@@ -125,13 +127,21 @@ Cero_Extra_2 = Palabra(355, 500, Colores["Blanco"], "0", 50)
 
 Puntos_Totales = 0
 
-#Reloj = Sprite(300 , 400, 40, 40, "Reloj.png")
+Restador = 0
+Restar = 0
+Total_Total = 0
+Puntuacion_Corazones = 0
+Puntuacion_Monedas = 0
+Puntuacion_Habilidad = 0
+Puntuacion_Tiempo = 0
+
+Enemigos_Matados = 1200
 
 M = 0
 
 S = 0
 
-Segundos = 126
+Segundos = 120
 
 Sumador = 0
 
@@ -201,13 +211,13 @@ while True:
             if Cora.rect.y < 100 and Cora.rect.x > 700:
                 Base.Grupo.remove(Cora)
                 Base.Corazones.remove(Cora)
+                Puntuacion_Corazones += 1000
                 Puntos_Totales += 1000
                 Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         if len(Base.Corazones.sprites()) == 0:
             Respuesta = True
 
     if Respuesta:
-        print("Entre")
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
 
@@ -231,7 +241,10 @@ while True:
             frames_animacion_Monedas = frames_totales
             if Moneda.Animacion_Monedas(posx, posy):
                 Mostrador -= 1
+                Puntuacion_Monedas += 200
+                Puntos_Totales += 200
                 Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
+                Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
                 Total_Monedas -= 1
         else:
             Base.Grupo.add(Moneda)
@@ -262,19 +275,22 @@ while True:
         blitea_2 = True
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 20 < frames_totales:
-        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Cero_mas_2 = False
-        S -= 1
-        Puntos_Totales - S
+        Puntos_Totales -= 10
+        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         if M == 0:
             termine = True
         if termine and S == 0:
             S = 0
             Cero_mas_2 = True
             Activar_Animacion_Tiempo = False
+            Hacer_Cuentas = True
         if S == 0 and not termine:
+            print("Entre")
             M -= 1
             S = 60
+        if Activar_Animacion_Tiempo:
+            S -= 1
         Tiempo_Segundos = Palabra(320, 500, Colores["Blanco"], str(S), 50)
         Tiempo_Minutos = Palabra(260, 500, Colores["Blanco"], str(M), 50)
 
@@ -303,12 +319,26 @@ while True:
         Sumador += 25
 
     if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 20 < frames_totales:
-        if Sumador == 0:
+        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
+        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+        Sumador -= 25
+        Enemigos_Matados -= 25
+        if Enemigos_Matados <= 0 and Sumador == 0:
             Blitea_3 = False
+            Activar_Animacion_Puntos_Habilidad = False
             Activar_Animacion_Tiempo = True
             frames_Tiempo = frames_totales
-        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
-        Sumador -= 25
+        if Activar_Animacion_Puntos_Habilidad:
+            Puntos_Totales += 25
+            Puntuacion_Habilidad += 25
+
+    if Hacer_Cuentas:
+        Total_Total = ((Puntuacion_Corazones + Puntuacion_Habilidad + Puntuacion_Monedas) / Segundos) * 1200
+        Restar = Puntos_Totales - Total_Total
+        Restador = (Restar/Segundos)
+
+    if Total_Total <= Puntos_Totales:
+        Puntos_Totales -= Restador
 
     pygame.display.update()
     frames_totales += 1
