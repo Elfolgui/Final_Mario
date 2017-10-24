@@ -76,6 +76,8 @@ aux = 0
 
 aux2 = 0
 
+aux_3 = True
+
 Cero_mas = False
 
 Cero_mas_2 = False
@@ -129,7 +131,7 @@ Puntos_Totales = 0
 
 Restador = 0
 Restar = 0
-Total_Total = 0
+Total_Total = 1900000000000000000
 Puntuacion_Corazones = 0
 Puntuacion_Monedas = 0
 Puntuacion_Habilidad = 0
@@ -276,21 +278,18 @@ while True:
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 20 < frames_totales:
         Cero_mas_2 = False
-        Puntos_Totales -= 10
-        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         if M == 0:
             termine = True
         if termine and S == 0:
             S = 0
             Cero_mas_2 = True
             Activar_Animacion_Tiempo = False
-            Hacer_Cuentas = True
         if S == 0 and not termine:
-            print("Entre")
             M -= 1
             S = 60
         if Activar_Animacion_Tiempo:
             S -= 1
+            Hacer_Cuentas = True
         Tiempo_Segundos = Palabra(320, 500, Colores["Blanco"], str(S), 50)
         Tiempo_Minutos = Palabra(260, 500, Colores["Blanco"], str(M), 50)
 
@@ -332,13 +331,19 @@ while True:
             Puntos_Totales += 25
             Puntuacion_Habilidad += 25
 
-    if Hacer_Cuentas:
-        Total_Total = ((Puntuacion_Corazones + Puntuacion_Habilidad + Puntuacion_Monedas) / Segundos) * 1200
+    if Hacer_Cuentas and aux_3:
+        Total_Total = ((Puntuacion_Corazones + Puntuacion_Habilidad + Puntuacion_Monedas) / Segundos)
+        print(Total_Total)
         Restar = Puntos_Totales - Total_Total
+        print(Restar)
         Restador = (Restar/Segundos)
+        print(Restador)
+        aux_3 = False
 
     if Total_Total <= Puntos_Totales:
+        print("Reste")
         Puntos_Totales -= Restador
+        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
     pygame.display.update()
     frames_totales += 1
