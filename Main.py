@@ -2,7 +2,7 @@ from Clases import *
 
 Controlador.iniciar()
 
-Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255)}
+Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255), "Verde": (50, 205, 50), "Rojo": (255, 0, 0)}
 
 Fuente_1 = 70
 
@@ -88,6 +88,10 @@ Cero_mas_4 = False
 
 Hacer_Cuentas = False
 
+Activar_Mostrar_Puntuacion_Corazones = False
+
+Activar_Mostrar_Puntuacion_Monedas = False
+
 frames_animacion_Corazones = 0
 
 frames_mostrar_Corazones = 0
@@ -106,7 +110,14 @@ frames_Tiempo = 0
 
 Respuesta = ""
 
-Dos_Puntos = Sprite(290, 498, 20, 40, "Puntos.png")
+Dos_Puntos_1 = Sprite(660, 50, 30, 55, "Puntos.png")
+Dos_Puntos_2 = Sprite(190, 197, 25, 45, "Puntos.png")
+Dos_Puntos_3 = Sprite(260, 297, 25, 45, "Puntos.png")
+Dos_Puntos_4 = Sprite(290, 397, 25, 45, "Puntos.png")
+Dos_Puntos_5 = Sprite(210, 495, 25, 45, "Puntos.png")
+Dos_Puntos_6 = Sprite(307, 498, 25, 45, "Puntos.png")
+
+Lista_Puntos = [Dos_Puntos_1, Dos_Puntos_2, Dos_Puntos_3, Dos_Puntos_4, Dos_Puntos_5, Dos_Puntos_6]
 
 Corazon_1 = Sprite(250, 200, 40, 40, "Corazon.png")
 Corazon_2 = Sprite(325, 200, 40, 40, "Corazon.png")
@@ -124,8 +135,8 @@ Lista_Monedas_Pasivas = []
 Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
-Cero_Extra = Palabra(230, 500, Colores["Blanco"], "0", 50)
-Cero_Extra_2 = Palabra(355, 500, Colores["Blanco"], "0", 50)
+Cero_Extra = Palabra(250, 500, Colores["Blanco"], "0", 50)
+Cero_Extra_2 = Palabra(375, 500, Colores["Blanco"], "0", 50)
 
 Puntos_Totales = 0
 
@@ -152,11 +163,13 @@ posy = Moneda.rect.y
 
 Total_Monedas = cantidad_monedas
 
-Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
+Mostrador_Puntos_Habilidad = Palabra(340, 395, Colores["Blanco"], str(Sumador), 60)
 
-Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
-x = Palabra(350, 305, Colores["Blanco"], "x", 40)
+x_1 = Palabra(350, 305, Colores["Blanco"], "x", 40)
+x_2 = Palabra(238, 208, Colores["Blanco"], "x", 40)
+x_3 = Palabra(300, 308, Colores["Blanco"], "x", 40)
 
 while True:
     Controlador.set_fps(reloj, FPS)
@@ -174,12 +187,14 @@ while True:
         Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
     elif frames_totales > 70 and posicion == 0:
         frames_totales = 0
+        Base.Grupo.add(Lista_Puntos[posicion])
         posicion += 1
     elif frames_totales <= 50 and 0 < posicion < 5:
         Palabras[posicion][1] = True
         Palabras[posicion][0].Aparecer(frames_totales, Colores["Blanco"])
     elif frames_totales > 50 and 0 < posicion < 5:
         frames_totales = 0
+        Base.Grupo.add(Lista_Puntos[posicion])
         posicion += 1
     if posicion == 5:
         Activar_Mostrar_Puntos_Totales = True
@@ -215,9 +230,11 @@ while True:
                 Base.Corazones.remove(Cora)
                 Puntuacion_Corazones += 1000
                 Puntos_Totales += 1000
-                Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+                Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         if len(Base.Corazones.sprites()) == 0:
             Respuesta = True
+            Activar_Mostrar_Puntuacion_Corazones = True
+            Puntuacion_Corazon = Palabra(270, 195, Colores["Verde"], str(Puntuacion_Corazones), 60)
 
     if Respuesta:
         Activar_Animacion_Corazones = False
@@ -246,7 +263,7 @@ while True:
                 Puntuacion_Monedas += 200
                 Puntos_Totales += 200
                 Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
-                Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+                Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
                 Total_Monedas -= 1
         else:
             Base.Grupo.add(Moneda)
@@ -255,7 +272,9 @@ while True:
             Base.Grupo.remove(Moneda)
             Base.Grupo.remove(Moneda_1)
             Activar_Animacion_Puntos_Habilidad = True
+            Activar_Mostrar_Puntuacion_Monedas = True
             frames_Controladores = frames_totales
+            Puntuacion_Moneda = Palabra(335, 295, Colores["Verde"], str(Puntuacion_Monedas), 60)
 
     if Activar_Mostrar_Tiempo:
         Cero_mas = True
@@ -271,9 +290,9 @@ while True:
                 Cero_Extra_2.posX -= 40
             Activar_Mostrar_Tiempo = False
             Activar_Animacion_Corazones = True
-        Tiempo_Segundos = Palabra(320, 500, Colores["Blanco"], str(S), 50)
-        Tiempo_Minutos = Palabra(260, 500, Colores["Blanco"], str(M), 50)
-        Base.Grupo.add(Dos_Puntos)
+        Tiempo_Segundos = Palabra(340, 500, Colores["Blanco"], str(S), 50)
+        Tiempo_Minutos = Palabra(280, 500, Colores["Blanco"], str(M), 50)
+        Base.Grupo.add(Dos_Puntos_6)
         blitea_2 = True
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 20 < frames_totales:
@@ -290,8 +309,8 @@ while True:
         if Activar_Animacion_Tiempo:
             S -= 1
             Hacer_Cuentas = True
-        Tiempo_Segundos = Palabra(320, 500, Colores["Blanco"], str(S), 50)
-        Tiempo_Minutos = Palabra(260, 500, Colores["Blanco"], str(M), 50)
+        Tiempo_Segundos = Palabra(340, 500, Colores["Blanco"], str(S), 50)
+        Tiempo_Minutos = Palabra(280, 500, Colores["Blanco"], str(M), 50)
 
     if blitea_2 and not Cero_mas_2:
         ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
@@ -304,7 +323,7 @@ while True:
         ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 25, Tiempo_Segundos.posY))
 
     if Blitea:
-        ventana.blit(x.Palabra, (x.posX, x.posY))
+        ventana.blit(x_1.Palabra, (x_1.posX, x_1.posY))
         ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
     if Blitea_3:
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
@@ -314,12 +333,12 @@ while True:
             Activar_Mostrar_Tiempo = True
             Activar_Mostrar_Puntos_Habilidad = False
         Blitea_3 = True
-        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
+        Mostrador_Puntos_Habilidad = Palabra(340, 395, Colores["Blanco"], str(Sumador), 60)
         Sumador += 25
 
     if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 20 < frames_totales:
-        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
-        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+        Mostrador_Puntos_Habilidad = Palabra(340, 395, Colores["Blanco"], str(Sumador), 60)
+        Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 25
         Enemigos_Matados -= 25
         if Enemigos_Matados <= 0 and Sumador == 0:
@@ -339,7 +358,15 @@ while True:
 
     if Total_Total <= Puntos_Totales:
         Puntos_Totales -= Restador
-        Puntuacion_Total = Palabra(780, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+        Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
+
+    if Activar_Mostrar_Puntuacion_Corazones:
+        ventana.blit(x_2.Palabra, (x_2.posX, x_2.posY))
+        ventana.blit(Puntuacion_Corazon.Palabra, (Puntuacion_Corazon.posX, Puntuacion_Corazon.posY))
+
+    if Activar_Mostrar_Puntuacion_Monedas:
+        ventana.blit(x_3.Palabra, (x_3.posX, x_3.posY))
+        ventana.blit(Puntuacion_Moneda.Palabra, (Puntuacion_Moneda.posX, Puntuacion_Moneda.posY))
 
     pygame.display.update()
     frames_totales += 1

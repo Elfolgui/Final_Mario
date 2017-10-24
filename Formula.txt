@@ -1,0 +1,1 @@
+mastil.tocado * 4 + 100 * (cantidad_signo) + 2500 (Si mato todo o nada) 
