@@ -8,7 +8,7 @@ class Sprite(Base):
     def Animacion_Corazones(self, frames_totales, ventana):
         if self.rect.x <= 750:
             self.rect.x += 6
-        if frames_totales % 7 == 0 and self.ancho > 0 and self.alto > 0:
+        if frames_totales % 5 == 0 and self.ancho > 0 and self.alto > 0:
             self.ancho -= 1
             self.alto -= 1
             self.image = pygame.transform.scale(self.image, (self.ancho, self.alto))
@@ -27,7 +27,7 @@ class Sprite(Base):
             self.rect.x += 30
         else:
             self.rect.x += 25
-        if self.rect.x > 850 and self.rect.y < 100:
+        if self.rect.x > 750 and self.rect.y < 200:
             self.rect.x = posx
             self.rect.y = posy
             return True
