@@ -106,7 +106,7 @@ frames_Tiempo = 0
 
 Respuesta = ""
 
-Dos_Puntos =++ Sprite(290, 498, 20, 40, "Puntos.png")
+Dos_Puntos = Sprite(290, 498, 20, 40, "Puntos.png")
 
 Corazon_1 = Sprite(250, 200, 40, 40, "Corazon.png")
 Corazon_2 = Sprite(325, 200, 40, 40, "Corazon.png")
