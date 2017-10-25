@@ -19,10 +19,10 @@ Controlador.rellenar_pantalla(ventana, Colores)
 Puntos = Palabra(120, 50, Colores["Blanco"], "puntuacion  final", 0)
 Vidas = Palabra(100, 200, Colores["Blanco"], "vidas", 0)
 Monedas = Palabra(100, 300, Colores["Blanco"], "monedas", 0)
-Habilidad = Palabra(100, 400, Colores["Blanco"], "habilidad", 0)
+Estilo = Palabra(100, 400, Colores["Blanco"], "estilo", 0)
 Tiempo = Palabra(100, 500, Colores["Blanco"], "tiempo", 0)
 
-Palabras = [[Puntos, False], [Vidas, False], [Monedas, False], [Habilidad, False], [Tiempo, False]]
+Palabras = [[Puntos, False], [Vidas, False], [Monedas, False], [Estilo, False], [Tiempo, False]]
 
 reloj = Controlador.iniciar_reloj()
 
@@ -32,11 +32,39 @@ Corazones = 4
 
 cantidad_monedas = 10
 
+posicion = 0
+
+Mostrador = 0
+
+Total_Monedas = 0
+
+aux = 0
+
+aux2 = 0
+
+aux_3 = True
+
+Cero_mas = False
+
+Cero_mas_2 = False
+
+Cero_mas_3 = False
+
+Cero_mas_4 = False
+
+Hacer_Cuentas = False
+
+Activar_Mostrar_Puntuacion_Corazones = False
+
+Activar_Mostrar_Puntuacion_Monedas = False
+
 Blitea = False
 
 blitea_2 = False
 
 Blitea_3 = False
+
+Blitea_4 = False
 
 Activar_Mostrar_Corazones = False
 
@@ -64,34 +92,6 @@ restando = False
 
 termine = False
 
-posicion = 0
-
-Mostrador = 0
-
-Total_Monedas = 0
-
-Puntos_Habilidad = 2000
-
-aux = 0
-
-aux2 = 0
-
-aux_3 = True
-
-Cero_mas = False
-
-Cero_mas_2 = False
-
-Cero_mas_3 = False
-
-Cero_mas_4 = False
-
-Hacer_Cuentas = False
-
-Activar_Mostrar_Puntuacion_Corazones = False
-
-Activar_Mostrar_Puntuacion_Monedas = False
-
 frames_animacion_Corazones = 0
 
 frames_mostrar_Corazones = 0
@@ -106,6 +106,10 @@ frames_animacion_Monedas = 0
 
 frames_Controladores = 0
 
+frames_mostrar_Puntos_Habilidad = 0
+
+frames_tardar_mostrar = 0
+
 frames_Tiempo = 0
 
 Respuesta = ""
@@ -113,9 +117,9 @@ Respuesta = ""
 Dos_Puntos_1 = Sprite(660, 50, 30, 55, "Puntos.png")
 Dos_Puntos_2 = Sprite(190, 197, 25, 45, "Puntos.png")
 Dos_Puntos_3 = Sprite(260, 297, 25, 45, "Puntos.png")
-Dos_Puntos_4 = Sprite(290, 397, 25, 45, "Puntos.png")
+Dos_Puntos_4 = Sprite(210, 397, 25, 45, "Puntos.png")
 Dos_Puntos_5 = Sprite(210, 495, 25, 45, "Puntos.png")
-Dos_Puntos_6 = Sprite(307, 498, 25, 45, "Puntos.png")
+Dos_Puntos_6 = Sprite(308, 497, 25, 45, "Puntos.png")
 
 Lista_Puntos = [Dos_Puntos_1, Dos_Puntos_2, Dos_Puntos_3, Dos_Puntos_4, Dos_Puntos_5, Dos_Puntos_6]
 
@@ -135,14 +139,15 @@ Lista_Monedas_Pasivas = []
 Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
-Cero_Extra = Palabra(250, 500, Colores["Blanco"], "0", 50)
-Cero_Extra_2 = Palabra(375, 500, Colores["Blanco"], "0", 50)
+Cero_Extra = Palabra(247, 495, Colores["Rojo"], "0", 60)
+Cero_Extra_2 = Palabra(375, 495, Colores["Rojo"], "0", 60)
 
 Puntos_Totales = 0
 
 Restador = 0
 Restar = 0
 Total_Total = 1900000000000000000
+
 Puntuacion_Corazones = 0
 Puntuacion_Monedas = 0
 Puntuacion_Habilidad = 0
@@ -158,6 +163,8 @@ Segundos = 120
 
 Sumador = 0
 
+Mostrar_sumador = 0
+
 posx = Moneda.rect.x
 posy = Moneda.rect.y
 
@@ -170,6 +177,13 @@ Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 x_1 = Palabra(350, 305, Colores["Blanco"], "x", 40)
 x_2 = Palabra(238, 208, Colores["Blanco"], "x", 40)
 x_3 = Palabra(300, 308, Colores["Blanco"], "x", 40)
+x_4 = Palabra(243, 408, Colores["Blanco"], "x", 40)
+
+Mastil_Posicion = 200
+Cantidad_Signos = 3
+Hizo_algo = True
+
+Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
 while True:
     Controlador.set_fps(reloj, FPS)
@@ -217,12 +231,12 @@ while True:
             Corazon = Sprite(625, 200, 40, 40, "Corazon.png")
             Corazon.rect.x = Lista_Corazones[aux][0].rect.x
             Corazon.rect.y = Lista_Corazones[aux][0].rect.y
-            frames_animacion_Corazones = frames_totales
+            frames_cantidad_Monedas = frames_totales
             Activar_Preparar_Monedas = True
             Activar_Mostrar_Corazones = False
             aux = 3
 
-    if Activar_Animacion_Corazones and frames_animacion_Corazones + 100 < frames_totales:
+    if Activar_Animacion_Corazones and frames_animacion_Corazones + 70 < frames_totales:
         for Cora in Base.Corazones:
             Cora.Animacion_Corazones(frames_totales, ventana)
             if Cora.rect.y < 100 and Cora.rect.x > 700:
@@ -241,11 +255,12 @@ while True:
         Activar_Animacion_Monedas = True
 
     if Activar_Preparar_Monedas:
-        Base.Grupo.add(Moneda_1)
         Activar_Preparar_Monedas = False
         Mostrar_Monedas = True
 
-    if Mostrar_Monedas and frames_cantidad_Monedas + 20 < frames_totales:
+    if Mostrar_Monedas and frames_cantidad_Monedas + 50 < frames_totales and frames_tardar_mostrar + 5 < frames_totales:
+        frames_tardar_mostrar = frames_totales
+        Base.Grupo.add(Moneda_1)
         Blitea = True
         Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
         if Mostrador != Total_Monedas + 1:
@@ -290,12 +305,12 @@ while True:
                 Cero_Extra_2.posX -= 40
             Activar_Mostrar_Tiempo = False
             Activar_Animacion_Corazones = True
-        Tiempo_Segundos = Palabra(340, 500, Colores["Blanco"], str(S), 50)
-        Tiempo_Minutos = Palabra(280, 500, Colores["Blanco"], str(M), 50)
+        Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
+        Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
         Base.Grupo.add(Dos_Puntos_6)
         blitea_2 = True
 
-    if Activar_Animacion_Tiempo and frames_Tiempo + 20 < frames_totales:
+    if Activar_Animacion_Tiempo and frames_Tiempo + 70 < frames_totales:
         Cero_mas_2 = False
         if M == 0:
             termine = True
@@ -309,8 +324,8 @@ while True:
         if Activar_Animacion_Tiempo:
             S -= 1
             Hacer_Cuentas = True
-        Tiempo_Segundos = Palabra(340, 500, Colores["Blanco"], str(S), 50)
-        Tiempo_Minutos = Palabra(280, 500, Colores["Blanco"], str(M), 50)
+        Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
+        Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
 
     if blitea_2 and not Cero_mas_2:
         ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
@@ -320,44 +335,62 @@ while True:
     if Cero_mas_2:
         ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
         ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-        ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 25, Tiempo_Segundos.posY))
+        ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
 
     if Blitea:
         ventana.blit(x_1.Palabra, (x_1.posX, x_1.posY))
         ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
     if Blitea_3:
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
+    if Blitea_4:
+        ventana.blit(x_4.Palabra, (x_4.posX, x_4.posY))
+        Mostrador_Puntos_Habilidad = Palabra(273, 395, Colores["Verde"], str(Mostrar_sumador), 60)
+        ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
 
-    if Activar_Mostrar_Puntos_Habilidad:
-        if Sumador == Puntos_Habilidad:
+    if Activar_Mostrar_Puntos_Habilidad and frames_mostrar_Puntos_Habilidad + 10 < frames_totales:
+        frames_mostrar_Puntos_Habilidad = frames_totales
+        if Sumador >= Puntos_Habilidad:
+            Mostrar_sumador = Sumador
             Activar_Mostrar_Tiempo = True
             Activar_Mostrar_Puntos_Habilidad = False
         Blitea_3 = True
-        Mostrador_Puntos_Habilidad = Palabra(340, 395, Colores["Blanco"], str(Sumador), 60)
-        Sumador += 25
+        Mostrador_Puntos_Habilidad = Palabra(245, 395, Colores["Blanco"], str(Sumador), 60)
+        Sumador += 100
 
-    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 20 < frames_totales:
-        Mostrador_Puntos_Habilidad = Palabra(340, 395, Colores["Blanco"], str(Sumador), 60)
+    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 10 < frames_totales:
+        Mostrador_Puntos_Habilidad = Palabra(245, 395, Colores["Blanco"], str(Sumador), 60)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
-        Sumador -= 25
-        Enemigos_Matados -= 25
+        Sumador -= 100
+        Enemigos_Matados -= 100
         if Enemigos_Matados <= 0 and Sumador == 0:
             Blitea_3 = False
+            Blitea_4 = True
             Activar_Animacion_Puntos_Habilidad = False
             Activar_Animacion_Tiempo = True
             frames_Tiempo = frames_totales
         if Activar_Animacion_Puntos_Habilidad:
-            Puntos_Totales += 25
-            Puntuacion_Habilidad += 25
+            frames_Controladores = frames_totales
+            Puntos_Totales += 100
+            Puntuacion_Habilidad += 100
 
     if Hacer_Cuentas and aux_3:
-        Total_Total = int(((Puntuacion_Corazones + Puntuacion_Habilidad + Puntuacion_Monedas) / Segundos) * 12)
+        if Hizo_algo:
+            Hizo_algo = 2500
+        else:
+            Hizo_algo = 0
+        Total_Total = int(((Puntuacion_Corazones + (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo) + Puntuacion_Monedas) / Segundos)*12)
+        print(Total_Total)
         Restar = Puntos_Totales - Total_Total
+        print(Restar)
         Restador = int((Restar/Segundos))
+        print(Restador)
         aux_3 = False
 
     if Total_Total <= Puntos_Totales:
         Puntos_Totales -= Restador
+
+        print(Total_Total)
+        print(Puntos_Totales)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
     if Activar_Mostrar_Puntuacion_Corazones:
