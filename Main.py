@@ -180,8 +180,8 @@ x_2 = Palabra(238, 208, Colores["Blanco"], "x", 40)
 x_3 = Palabra(300, 308, Colores["Blanco"], "x", 40)
 x_4 = Palabra(243, 408, Colores["Blanco"], "x", 40)
 
-Mastil_Posicion = 200
-Cantidad_Signos = 3
+Mastil_Posicion = 300
+Cantidad_Signos = 5
 Hizo_algo = True
 
 Lista_Estilos = ("mediocre", "bueno", "muy bueno", "excelente")
@@ -265,7 +265,7 @@ while True:
         frames_tardar_mostrar = frames_totales
         Base.Grupo.add(Moneda_1)
         Blitea = True
-        Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
+        Numero = Palabra(390, 295, Colores["Verde"], str(Mostrador), 60)
         if Mostrador != Total_Monedas + 1:
             Mostrador += 1
         if Total_Monedas + 1 == Mostrador:
@@ -280,7 +280,7 @@ while True:
                 Mostrador -= 1
                 Puntuacion_Monedas += 200
                 Puntos_Totales += 200
-                Numero = Palabra(390, 295, Colores["Blanco"], str(Mostrador), 60)
+                Numero = Palabra(390, 295, Colores["Verde"], str(Mostrador), 60)
                 Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
                 Total_Monedas -= 1
         else:
@@ -347,13 +347,13 @@ while True:
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
     if Blitea_4:
         if Mostrar_sumador < 800:
-            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[0], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[0], 60)
         elif 800 <= Mostrar_sumador < 1200:
-            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[1], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[1], 60)
         elif 1200 <= Mostrar_sumador < 1600:
-            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[2], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[2], 60)
         elif Mostrar_sumador >= 1600:
-            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[3], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[3], 60)
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
 
     if Activar_Mostrar_Puntos_Habilidad and frames_Controladores + 10 < frames_totales and frames_mostrar_Puntos_Habilidad + 5 < frames_totales:
@@ -363,11 +363,11 @@ while True:
             Activar_Mostrar_Tiempo = True
             Activar_Mostrar_Puntos_Habilidad = False
         Blitea_3 = True
-        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
+        Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], str(Sumador), 60)
         Sumador += 100
 
     if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 5 < frames_totales:
-        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
+        Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], str(Sumador), 60)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 100
         Enemigos_Matados -= 100
