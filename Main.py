@@ -299,12 +299,18 @@ while True:
             frames_Controladores = frames_totales
             Puntuacion_Moneda = Palabra(335, 295, Colores["Verde"], str(Puntuacion_Monedas), 60)
 
-    if Activar_Mostrar_Tiempo:
+    if Activar_Mostrar_Tiempo and frames_Tiempo + 20 < frames_totales:
         Cero_mas = True
         S += 1
         if S == 60:
             M += 1
             S -= 60
+        if 0 < S < 10:
+            blitea_2 = False
+            Cero_mas_4 = True
+        if S >= 10:
+            blitea_2 = True
+            Cero_mas_4 = False
         if S + (M * 60) == Segundos:
             if M > 10:
                 Cero_mas = False
@@ -316,7 +322,6 @@ while True:
         Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
         Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
         Base.Grupo.add(Dos_Puntos_6)
-        blitea_2 = True
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 70 < frames_totales:
         Cero_mas_2 = False
@@ -325,6 +330,7 @@ while True:
         if termine and S == 0:
             S = 0
             Cero_mas_2 = True
+            Cero_mas_3 = False
             Activar_Animacion_Tiempo = False
         if S == 0 and not termine:
             M -= 1
@@ -332,6 +338,12 @@ while True:
         if Activar_Animacion_Tiempo:
             S -= 1
             Hacer_Cuentas = True
+        if 0 < S < 10:
+            blitea_2 = False
+            Cero_mas_3 = True
+        if S >= 10:
+            blitea_2 = True
+            Cero_mas_3 = False
         Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
         Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
 
@@ -344,7 +356,14 @@ while True:
         ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
         ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
         ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
-
+    if Cero_mas_3:
+        ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+        ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
+        ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
+    if Cero_mas_4:
+        ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+        ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 33, Tiempo_Segundos.posY))
+        ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX - 37, Cero_Extra_2.posY))
     if Blitea:
         ventana.blit(x_1.Palabra, (x_1.posX, x_1.posY))
         ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
