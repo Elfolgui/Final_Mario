@@ -183,6 +183,8 @@ Mastil_Posicion = 200
 Cantidad_Signos = 3
 Hizo_algo = True
 
+Lista_Estilos = ("mediocre", "bueno", "muy bueno", "excelente")
+
 Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
 while True:
@@ -343,11 +345,18 @@ while True:
     if Blitea_3:
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
     if Blitea_4:
-        ventana.blit(x_4.Palabra, (x_4.posX, x_4.posY))
-        Mostrador_Puntos_Habilidad = Palabra(273, 395, Colores["Verde"], str(Mostrar_sumador), 60)
+        print("Entre")
+        if Mostrar_sumador < 800:
+            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[0], 60)
+        elif 800 <= Mostrar_sumador < 1200:
+            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[1], 60)
+        elif 1200 <= Mostrar_sumador < 1600:
+            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[2], 60)
+        elif Mostrar_sumador >= 1600:
+            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[3], 60)
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
 
-    if Activar_Mostrar_Puntos_Habilidad and frames_mostrar_Puntos_Habilidad + 10 < frames_totales:
+    if Activar_Mostrar_Puntos_Habilidad and frames_Controladores + 10 < frames_totales and frames_mostrar_Puntos_Habilidad + 5 < frames_totales:
         frames_mostrar_Puntos_Habilidad = frames_totales
         if Sumador >= Puntos_Habilidad:
             Mostrar_sumador = Sumador
@@ -357,7 +366,7 @@ while True:
         Mostrador_Puntos_Habilidad = Palabra(245, 395, Colores["Blanco"], str(Sumador), 60)
         Sumador += 100
 
-    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 10 < frames_totales:
+    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 5 < frames_totales:
         Mostrador_Puntos_Habilidad = Palabra(245, 395, Colores["Blanco"], str(Sumador), 60)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 100
@@ -379,18 +388,12 @@ while True:
         else:
             Hizo_algo = 0
         Total_Total = int(((Puntuacion_Corazones + (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo) + Puntuacion_Monedas) / Segundos)*12)
-        print(Total_Total)
         Restar = Puntos_Totales - Total_Total
-        print(Restar)
         Restador = int((Restar/Segundos))
-        print(Restador)
         aux_3 = False
 
     if Total_Total <= Puntos_Totales:
         Puntos_Totales -= Restador
-
-        print(Total_Total)
-        print(Puntos_Totales)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
     if Activar_Mostrar_Puntuacion_Corazones:
