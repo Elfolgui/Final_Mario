@@ -2,7 +2,8 @@ from Clases import *
 
 Controlador.iniciar()
 
-Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255), "Verde": (50, 205, 50), "Rojo": (255, 0, 0)}
+Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255), "Verde": (50,205,50), "Rojo": (178,34,34)}
+#(255, 0, 0)}
 
 Fuente_1 = 70
 
@@ -19,10 +20,10 @@ Controlador.rellenar_pantalla(ventana, Colores)
 Puntos = Palabra(120, 50, Colores["Blanco"], "puntuacion  final", 0)
 Vidas = Palabra(100, 200, Colores["Blanco"], "vidas", 0)
 Monedas = Palabra(100, 300, Colores["Blanco"], "monedas", 0)
-Estilo = Palabra(100, 400, Colores["Blanco"], "estilo", 0)
+Destreza = Palabra(100, 400, Colores["Blanco"], "destreza", 0)
 Tiempo = Palabra(100, 500, Colores["Blanco"], "tiempo", 0)
 
-Palabras = [[Puntos, False], [Vidas, False], [Monedas, False], [Estilo, False], [Tiempo, False]]
+Palabras = [[Puntos, False], [Vidas, False], [Monedas, False], [Destreza, False], [Tiempo, False]]
 
 reloj = Controlador.iniciar_reloj()
 
@@ -116,8 +117,8 @@ Respuesta = ""
 
 Dos_Puntos_1 = Sprite(660, 50, 30, 55, "Puntos.png")
 Dos_Puntos_2 = Sprite(190, 197, 25, 45, "Puntos.png")
-Dos_Puntos_3 = Sprite(260, 297, 25, 45, "Puntos.png")
-Dos_Puntos_4 = Sprite(210, 397, 25, 45, "Puntos.png")
+Dos_Puntos_3 = Sprite(250, 297, 25, 45, "Puntos.png")
+Dos_Puntos_4 = Sprite(270, 397, 25, 45, "Puntos.png")
 Dos_Puntos_5 = Sprite(210, 495, 25, 45, "Puntos.png")
 Dos_Puntos_6 = Sprite(308, 497, 25, 45, "Puntos.png")
 
@@ -345,15 +346,14 @@ while True:
     if Blitea_3:
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
     if Blitea_4:
-        print("Entre")
         if Mostrar_sumador < 800:
-            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[0], 60)
+            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[0], 60)
         elif 800 <= Mostrar_sumador < 1200:
-            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[1], 60)
+            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[1], 60)
         elif 1200 <= Mostrar_sumador < 1600:
-            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[2], 60)
+            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[2], 60)
         elif Mostrar_sumador >= 1600:
-            Mostrador_Puntos_Habilidad = Palabra(255, 395, Colores["Verde"], Lista_Estilos[3], 60)
+            Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Verde"], Lista_Estilos[3], 60)
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
 
     if Activar_Mostrar_Puntos_Habilidad and frames_Controladores + 10 < frames_totales and frames_mostrar_Puntos_Habilidad + 5 < frames_totales:
@@ -363,11 +363,11 @@ while True:
             Activar_Mostrar_Tiempo = True
             Activar_Mostrar_Puntos_Habilidad = False
         Blitea_3 = True
-        Mostrador_Puntos_Habilidad = Palabra(245, 395, Colores["Blanco"], str(Sumador), 60)
+        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
         Sumador += 100
 
     if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 5 < frames_totales:
-        Mostrador_Puntos_Habilidad = Palabra(245, 395, Colores["Blanco"], str(Sumador), 60)
+        Mostrador_Puntos_Habilidad = Palabra(300, 395, Colores["Blanco"], str(Sumador), 60)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 100
         Enemigos_Matados -= 100
@@ -387,7 +387,7 @@ while True:
             Hizo_algo = 2500
         else:
             Hizo_algo = 0
-        Total_Total = int(((Puntuacion_Corazones + (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo) + Puntuacion_Monedas) / Segundos)*12)
+        Total_Total = int(((Puntuacion_Corazones + (Puntuacion_Habilidad + Hizo_algo) + Puntuacion_Monedas) / Segundos) * 20)
         Restar = Puntos_Totales - Total_Total
         Restador = int((Restar/Segundos))
         aux_3 = False
