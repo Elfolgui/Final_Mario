@@ -2,7 +2,9 @@ from Clases import *
 
 Controlador.iniciar()
 
-Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255), "Verde": (50,205,50), "Rojo": (178,34,34)}
+Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255), "Verde": (50, 205, 50),
+           "Rojo": (178, 34, 34), "Naranja": (255, 165, 0), "Amarillo": (255, 215, 0),
+           "Celeste": (0, 255, 255), "Azul": (0, 0, 255)}
 #(255, 0, 0)}
 
 Fuente_1 = 70
@@ -113,6 +115,8 @@ frames_tardar_mostrar = 0
 
 frames_Tiempo = 0
 
+frames_animacion_destreza = 0
+
 Respuesta = ""
 
 Dos_Puntos_1 = Sprite(660, 50, 30, 55, "Puntos.png")
@@ -154,8 +158,6 @@ Puntuacion_Monedas = 0
 Puntuacion_Habilidad = 0
 Puntuacion_Tiempo = 0
 
-Enemigos_Matados = 1200
-
 M = 0
 
 S = 0
@@ -180,14 +182,15 @@ x_2 = Palabra(238, 208, Colores["Blanco"], "x", 40)
 x_3 = Palabra(300, 308, Colores["Blanco"], "x", 40)
 x_4 = Palabra(243, 408, Colores["Blanco"], "x", 40)
 
-Mastil_Posicion = 300
-Cantidad_Signos = 5
-Hizo_algo = True
+Mastil_Posicion = 400
+Cantidad_Signos = 4
+Hizo_algo = False
 
-Lista_Estilos = ("mediocre", "bueno", "muy bueno", "excelente")
+Lista_Estilos = ("chuaman", "bueno", "muy bueno", "excelente")
 
 Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
+print(Puntos_Habilidad)
 while True:
     Controlador.set_fps(reloj, FPS)
     Controlador.buscar_eventos()
@@ -256,6 +259,9 @@ while True:
     if Respuesta:
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
+        frames_animacion_Monedas = frames_totales
+        print(frames_animacion_Monedas)
+        Respuesta = False
 
     if Activar_Preparar_Monedas:
         Activar_Preparar_Monedas = False
@@ -273,9 +279,8 @@ while True:
             Mostrar_Monedas = False
             Activar_Mostrar_Puntos_Habilidad = True
 
-    if Activar_Animacion_Monedas and Total_Monedas >= 0:
+    if Activar_Animacion_Monedas and Total_Monedas >= 0 and frames_animacion_Monedas + 50 < frames_totales:
         if Base.Grupo.has(Moneda):
-            frames_animacion_Monedas = frames_totales
             if Moneda.Animacion_Monedas(posx, posy):
                 Mostrador -= 1
                 Puntuacion_Monedas += 200
@@ -347,11 +352,11 @@ while True:
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
     if Blitea_4:
         if Mostrar_sumador < 800:
-            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[0], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Naranja"], Lista_Estilos[0], 60)
         elif 800 <= Mostrar_sumador < 1200:
-            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[1], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Celeste"], Lista_Estilos[1], 60)
         elif 1200 <= Mostrar_sumador < 1600:
-            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[2], 60)
+            Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Azul"], Lista_Estilos[2], 60)
         elif Mostrar_sumador >= 1600:
             Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[3], 60)
         ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
@@ -366,19 +371,19 @@ while True:
         Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], str(Sumador), 60)
         Sumador += 100
 
-    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 5 < frames_totales:
+    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 20 < frames_totales and frames_animacion_destreza + 5 < frames_totales:
         Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], str(Sumador), 60)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 100
-        Enemigos_Matados -= 100
-        if Enemigos_Matados <= 0 and Sumador == 0:
+        if Sumador == 0:
+            print("Entro")
             Blitea_3 = False
             Blitea_4 = True
             Activar_Animacion_Puntos_Habilidad = False
             Activar_Animacion_Tiempo = True
             frames_Tiempo = frames_totales
         if Activar_Animacion_Puntos_Habilidad:
-            frames_Controladores = frames_totales
+            frames_animacion_destreza = frames_totales
             Puntos_Totales += 100
             Puntuacion_Habilidad += 100
 
