@@ -198,7 +198,7 @@ Lista_Estilos = ("chuaman", "bueno", "muy bueno", "excelente")
 
 Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
-
+Posicion_Ranking = 10
 
 while True:
     Controlador.set_fps(reloj, FPS)
