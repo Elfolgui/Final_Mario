@@ -198,14 +198,11 @@ Lista_Estilos = ("chuaman", "bueno", "muy bueno", "excelente")
 
 Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
-print(Puntos_Habilidad)
 
-Lista_Final = []
 
 while True:
     Controlador.set_fps(reloj, FPS)
     Controlador.buscar_eventos()
-    Controlador.set_fps(reloj, FPS)
     Controlador.rellenar_pantalla(ventana, Colores)
     Base.Grupo.draw(ventana)
 
@@ -401,7 +398,7 @@ while True:
         Puntos_Totales -= Restador
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
-    if Activar_Borrar_Todo and frames_Borrar + 30 < frames_totales:
+    if Activar_Borrar_Todo and frames_Borrar + 50 < frames_totales:
         Borrar_Todo = True
         Activar_Borrar_Todo = False
 
@@ -450,6 +447,7 @@ while True:
     else:
         for sprite in Base.Grupo:
             Base.Grupo.remove(sprite)
+        Controlador.Rankeador(Colores, ventana)
 
     pygame.display.update()
     frames_totales += 1
