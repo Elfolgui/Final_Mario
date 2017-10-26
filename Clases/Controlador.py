@@ -1,5 +1,6 @@
 import pygame
 from .Sprites import *
+from .Fin import *
 
 class Controlador(object):
 
