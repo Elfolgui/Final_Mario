@@ -200,7 +200,9 @@ Lista_Estilos = ("chuaman", "bueno", "muy bueno", "excelente")
 
 Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
-Posicion_Ranking = 10
+Posicion_Ranking = 598
+
+Ranking = Palabra(0, 250, Colores["Blanco"], str(Posicion_Ranking), 150)
 
 while True:
     Controlador.set_fps(reloj, FPS)
@@ -234,7 +236,7 @@ while True:
 
 
         if Activar_Mostrar_Puntos_Totales:
-            if not Activar_Mostrar_Corazones and  frames_totales < 200:
+            if not Activar_Mostrar_Corazones and frames_totales < 200:
                 frames_cantidad_Corazones = frames_totales
                 Activar_Mostrar_Corazones = True
             ventana.blit(Puntuacion_Total.Palabra, (Puntuacion_Total.posX, Puntuacion_Total.posY))
@@ -280,12 +282,15 @@ while True:
             ventana.blit(x_3.Palabra, (x_3.posX, x_3.posY))
             ventana.blit(Puntuacion_Moneda.Palabra, (Puntuacion_Moneda.posX, Puntuacion_Moneda.posY))
 
-    if Borrar_Todo and frames_totales < 1600:
+    if Borrar_Todo and frames_totales < 2050:
         for sprite in Base.Grupo:
             Base.Grupo.remove(sprite)
         Controlador.Rankeador(Colores, ventana)
 
-    if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 25 < frames_totales:
+    if 2050 < frames_totales < 2150:
+        Controlador.Ranking(Ranking, Posicion_Ranking, Colores, ventana)
+
+    if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 50 < frames_totales:
         frames_cantidad_Corazones = frames_totales
         Base.Grupo.add(Lista_Corazones[aux][0])
         Base.Corazones.add(Lista_Corazones[aux][0])
@@ -325,7 +330,7 @@ while True:
         Activar_Preparar_Monedas = False
         Mostrar_Monedas = True
 
-    if Mostrar_Monedas and frames_cantidad_Monedas + 50 < frames_totales and frames_tardar_mostrar + 5 < frames_totales:
+    if Mostrar_Monedas and frames_cantidad_Monedas + 50 < frames_totales and frames_tardar_mostrar + 15 < frames_totales:
         frames_tardar_mostrar = frames_totales
         Base.Grupo.add(Moneda_1)
         Blitea = True
@@ -407,7 +412,7 @@ while True:
         Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
         Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
 
-    if Activar_Mostrar_Puntos_Habilidad and frames_Controladores + 10 < frames_totales and frames_mostrar_Puntos_Habilidad + 5 < frames_totales:
+    if Activar_Mostrar_Puntos_Habilidad and frames_Controladores + 10 < frames_totales and frames_mostrar_Puntos_Habilidad + 10 < frames_totales:
         frames_mostrar_Puntos_Habilidad = frames_totales
         if Sumador >= Puntos_Habilidad:
             Mostrar_sumador = Sumador
@@ -417,7 +422,7 @@ while True:
         Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], str(Sumador), 60)
         Sumador += 100
 
-    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 20 < frames_totales and frames_animacion_destreza + 5 < frames_totales:
+    if Activar_Animacion_Puntos_Habilidad and frames_Controladores + 20 < frames_totales and frames_animacion_destreza + 10 < frames_totales:
         Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], str(Sumador), 60)
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 100
@@ -449,9 +454,10 @@ while True:
         Puntos_Totales -= Restador
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
-    if Activar_Borrar_Todo and frames_Borrar + 500 < frames_totales:
+    if Activar_Borrar_Todo and frames_Borrar + 300 < frames_totales:
         Borrar_Todo = True
         Activar_Borrar_Todo = False
+        print(frames_totales)
 
     pygame.display.update()
     frames_totales += 1
