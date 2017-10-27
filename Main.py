@@ -123,6 +123,8 @@ frames_animacion_destreza = 0
 
 frames_Borrar = 0
 
+frames_grobales = 0
+
 Respuesta = ""
 
 Dos_Puntos_1 = Sprite(660, 50, 30, 55, "Puntos.png")
@@ -168,7 +170,7 @@ M = 0
 
 S = 0
 
-Segundos = 120
+Segundos = 180
 
 Sumador = 0
 
@@ -230,11 +232,58 @@ while True:
             frames_mostrar = frames_totales
             posicion = -1
 
+
         if Activar_Mostrar_Puntos_Totales:
-            if not Activar_Mostrar_Corazones and frames_totales < 200:
+            if not Activar_Mostrar_Corazones and  frames_totales < 200:
                 frames_cantidad_Corazones = frames_totales
                 Activar_Mostrar_Corazones = True
             ventana.blit(Puntuacion_Total.Palabra, (Puntuacion_Total.posX, Puntuacion_Total.posY))
+
+        if blitea_2 and not Cero_mas_2:
+            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
+        if Cero_mas:
+            ventana.blit(Cero_Extra.Palabra, (Cero_Extra.posX, Cero_Extra.posY))
+        if Cero_mas_2:
+            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
+            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
+        if Cero_mas_3:
+            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
+            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
+        if Cero_mas_4:
+            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 33, Tiempo_Segundos.posY))
+            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX - 37, Cero_Extra_2.posY))
+        if Blitea:
+            ventana.blit(x_1.Palabra, (x_1.posX, x_1.posY))
+            ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
+        if Blitea_3:
+            ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
+        if Blitea_4:
+            if Mostrar_sumador < 800:
+                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Naranja"], Lista_Estilos[0], 60)
+            elif 800 <= Mostrar_sumador < 1200:
+                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Celeste"], Lista_Estilos[1], 60)
+            elif 1200 <= Mostrar_sumador < 1600:
+                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Azul"], Lista_Estilos[2], 60)
+            elif Mostrar_sumador >= 1600:
+                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[3], 60)
+            ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
+
+        if Activar_Mostrar_Puntuacion_Corazones:
+            ventana.blit(x_2.Palabra, (x_2.posX, x_2.posY))
+            ventana.blit(Puntuacion_Corazon.Palabra, (Puntuacion_Corazon.posX, Puntuacion_Corazon.posY))
+
+        if Activar_Mostrar_Puntuacion_Monedas:
+            ventana.blit(x_3.Palabra, (x_3.posX, x_3.posY))
+            ventana.blit(Puntuacion_Moneda.Palabra, (Puntuacion_Moneda.posX, Puntuacion_Moneda.posY))
+
+    if Borrar_Todo and frames_totales < 1600:
+        for sprite in Base.Grupo:
+            Base.Grupo.remove(sprite)
+        Controlador.Rankeador(Colores, ventana)
 
     if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 25 < frames_totales:
         frames_cantidad_Corazones = frames_totales
@@ -389,65 +438,20 @@ while True:
             Hizo_algo = 2500
         else:
             Hizo_algo = 0
-        Total_Total = int(((Puntuacion_Corazones + (Puntuacion_Habilidad + Hizo_algo) + Puntuacion_Monedas) / Segundos) * 20)
+        Total_Total = int(((Puntuacion_Corazones + (Puntuacion_Habilidad + Hizo_algo) + Puntuacion_Monedas) / Segundos) * 100)
+        print(Total_Total)
         Restar = Puntos_Totales - Total_Total
         Restador = int((Restar/Segundos))
+        print(Restador)
         aux_3 = False
 
     if Total_Total <= Puntos_Totales:
         Puntos_Totales -= Restador
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 
-    if Activar_Borrar_Todo and frames_Borrar + 50 < frames_totales:
+    if Activar_Borrar_Todo and frames_Borrar + 500 < frames_totales:
         Borrar_Todo = True
         Activar_Borrar_Todo = False
-
-    if not Borrar_Todo:
-        if blitea_2 and not Cero_mas_2:
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
-        if Cero_mas:
-            ventana.blit(Cero_Extra.Palabra, (Cero_Extra.posX, Cero_Extra.posY))
-        if Cero_mas_2:
-            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
-        if Cero_mas_3:
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
-            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
-        if Cero_mas_4:
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 33, Tiempo_Segundos.posY))
-            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX - 37, Cero_Extra_2.posY))
-        if Blitea:
-            ventana.blit(x_1.Palabra, (x_1.posX, x_1.posY))
-            ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
-        if Blitea_3:
-            ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
-        if Blitea_4:
-            if Mostrar_sumador < 800:
-                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Naranja"], Lista_Estilos[0], 60)
-            elif 800 <= Mostrar_sumador < 1200:
-                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Celeste"], Lista_Estilos[1], 60)
-            elif 1200 <= Mostrar_sumador < 1600:
-                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Azul"], Lista_Estilos[2], 60)
-            elif Mostrar_sumador >= 1600:
-                Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Verde"], Lista_Estilos[3], 60)
-            ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
-
-        if Activar_Mostrar_Puntuacion_Corazones:
-            ventana.blit(x_2.Palabra, (x_2.posX, x_2.posY))
-            ventana.blit(Puntuacion_Corazon.Palabra, (Puntuacion_Corazon.posX, Puntuacion_Corazon.posY))
-
-        if Activar_Mostrar_Puntuacion_Monedas:
-            ventana.blit(x_3.Palabra, (x_3.posX, x_3.posY))
-            ventana.blit(Puntuacion_Moneda.Palabra, (Puntuacion_Moneda.posX, Puntuacion_Moneda.posY))
-
-    else:
-        for sprite in Base.Grupo:
-            Base.Grupo.remove(sprite)
-        Controlador.Rankeador(Colores, ventana)
 
     pygame.display.update()
     frames_totales += 1
