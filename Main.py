@@ -125,6 +125,8 @@ frames_Borrar = 0
 
 frames_grobales = 0
 
+ultimos_frames = 0
+
 Respuesta = ""
 
 Dos_Puntos_1 = Sprite(660, 50, 30, 55, "Puntos.png")
@@ -196,7 +198,7 @@ Mastil_Posicion = 400
 Cantidad_Signos = 4
 Hizo_algo = False
 
-Lista_Estilos = ("chuaman", "bueno", "muy bueno", "excelente")
+Lista_Estilos = ("malo", "bueno", "muy bueno", "excelente")
 
 Puntos_Habilidad = (Mastil_Posicion * 4 + Cantidad_Signos * 100 + Hizo_algo)
 
@@ -204,11 +206,31 @@ Posicion_Ranking = 598
 
 Ranking = Palabra(0, 250, Colores["Blanco"], str(Posicion_Ranking), 150)
 
+sumador_aux = 70
+
+rank = False
+
+estado1 = True
+
 while True:
     Controlador.set_fps(reloj, FPS)
-    Controlador.buscar_eventos()
+    Resultado = Controlador.buscar_eventos(estado1)
+    if Resultado == "Puntuacion_Total" and Activar_Borrar_Todo:
+        Borrar_Todo = True
+        Activar_Borrar_Todo = False
+        estado1 = False
+    if Resultado == "Ranking":
+        print("Entre")
+        rank = True
+        ultimos_frames = frames_totales
+
     Controlador.rellenar_pantalla(ventana, Colores)
     Base.Grupo.draw(ventana)
+
+    if not rank:
+        if Activar_Mostrar_Puntos_Totales:
+            ventana.blit(Puntuacion_Total.Palabra, (Puntuacion_Total.posX, Puntuacion_Total.posY))
+        ventana.blit(Palabras[0][0].Palabra, (Palabras[0][0].posX, Palabras[0][0].posY))
 
     if not Borrar_Todo:
         for i in Palabras:
@@ -233,7 +255,6 @@ while True:
             Activar_Mostrar_Puntos_Totales = True
             frames_mostrar = frames_totales
             posicion = -1
-
 
         if Activar_Mostrar_Puntos_Totales:
             if not Activar_Mostrar_Corazones and frames_totales < 200:
@@ -282,13 +303,22 @@ while True:
             ventana.blit(x_3.Palabra, (x_3.posX, x_3.posY))
             ventana.blit(Puntuacion_Moneda.Palabra, (Puntuacion_Moneda.posX, Puntuacion_Moneda.posY))
 
-    if Borrar_Todo and frames_totales < 2050:
+    if Borrar_Todo:
         for sprite in Base.Grupo:
             Base.Grupo.remove(sprite)
-        Controlador.Rankeador(Colores, ventana)
+        if sumador_aux <= 100:
+            Palabras[0][0].Aparecer(sumador_aux, Colores["Blanco"])
+            Palabras[0][0].posX += 5
+            Puntuacion_Total.Aparecer(sumador_aux, Colores["Blanco"])
+            Puntuacion_Total.posX -= 8
+            Puntuacion_Total.posY += 8
+            sumador_aux += 1
 
-    if 2050 < frames_totales < 2150:
-        Controlador.Ranking(Ranking, Posicion_Ranking, Colores, ventana)
+    if rank:
+        if ultimos_frames + 100 > frames_totales:
+            Controlador.Rankeador(Colores, ventana)
+        if ultimos_frames + 100 < frames_totales:
+            Controlador.Ranking(Ranking, Posicion_Ranking, Colores, ventana)
 
     if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 50 < frames_totales:
         frames_cantidad_Corazones = frames_totales
@@ -323,7 +353,6 @@ while True:
         Activar_Animacion_Corazones = False
         Activar_Animacion_Monedas = True
         frames_animacion_Monedas = frames_totales
-        print(frames_animacion_Monedas)
         Respuesta = False
 
     if Activar_Preparar_Monedas:
@@ -427,7 +456,6 @@ while True:
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
         Sumador -= 100
         if Sumador == 0:
-            print("Entro")
             Blitea_3 = False
             Blitea_4 = True
             Activar_Animacion_Puntos_Habilidad = False
@@ -444,20 +472,13 @@ while True:
         else:
             Hizo_algo = 0
         Total_Total = int(((Puntuacion_Corazones + (Puntuacion_Habilidad + Hizo_algo) + Puntuacion_Monedas) / Segundos) * 100)
-        print(Total_Total)
         Restar = Puntos_Totales - Total_Total
         Restador = int((Restar/Segundos))
-        print(Restador)
         aux_3 = False
 
     if Total_Total <= Puntos_Totales:
         Puntos_Totales -= Restador
         Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
-
-    if Activar_Borrar_Todo and frames_Borrar + 300 < frames_totales:
-        Borrar_Todo = True
-        Activar_Borrar_Todo = False
-        print(frames_totales)
 
     pygame.display.update()
     frames_totales += 1

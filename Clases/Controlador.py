@@ -34,12 +34,18 @@ class Controlador(object):
         ventana.fill(colores["Negro"])
 
     @classmethod
-    def buscar_eventos(cls):
+    def buscar_eventos(cls, es1):
         for evento in pygame.event.get():
             if evento.type == pygame.QUIT:
                 cls.terminar()
             if evento.type == pygame.KEYDOWN and evento.key == pygame.K_ESCAPE:
                 cls.terminar()
+            if evento.type == pygame.KEYDOWN and evento.key == pygame.K_SPACE:
+                if es1:
+                    return "Puntuacion_Total"
+                if not es1:
+                    return "Ranking"
+
 
     @classmethod
     def Rankeador(cls, Colores, ventana):
