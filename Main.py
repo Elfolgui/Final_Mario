@@ -99,6 +99,14 @@ restando = False
 
 termine = False
 
+mayor = False
+
+aux_e = True
+
+Normal_Minutos = False
+
+Normal_Segundos = False
+
 frames_animacion_Corazones = 0
 
 frames_mostrar_Corazones = 0
@@ -134,7 +142,7 @@ Dos_Puntos_2 = Sprite(190, 197, 25, 45, "Puntos.png")
 Dos_Puntos_3 = Sprite(250, 297, 25, 45, "Puntos.png")
 Dos_Puntos_4 = Sprite(270, 397, 25, 45, "Puntos.png")
 Dos_Puntos_5 = Sprite(210, 495, 25, 45, "Puntos.png")
-Dos_Puntos_6 = Sprite(308, 497, 25, 45, "Puntos.png")
+Dos_Puntos_6 = Sprite(313, 497, 25, 45, "Puntos.png")
 
 Lista_Puntos = [Dos_Puntos_1, Dos_Puntos_2, Dos_Puntos_3, Dos_Puntos_4, Dos_Puntos_5, Dos_Puntos_6]
 
@@ -154,9 +162,6 @@ Lista_Monedas_Pasivas = []
 Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
 Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
-Cero_Extra = Palabra(247, 495, Colores["Rojo"], "0", 60)
-Cero_Extra_2 = Palabra(375, 495, Colores["Rojo"], "0", 60)
-
 Puntos_Totales = 0
 
 Restador = 0
@@ -172,7 +177,7 @@ M = 0
 
 S = 0
 
-Segundos = 290
+Segundos = 550
 
 Sumador = 0
 
@@ -211,6 +216,17 @@ sumador_aux = 70
 rank = False
 
 estado1 = True
+
+posx_minutos = 280
+posx_segundos = 340
+
+Cero_Extra = Palabra(247, 495, Colores["Rojo"], "0", 60)
+Cero_Extra_2 = Palabra(375, 495, Colores["Rojo"], "0", 60)
+
+Cero_Izquierda = False
+Cero_Derecha = False
+Cero_Izquierda_Segundos = False
+
 
 while True:
     Controlador.set_fps(reloj, FPS)
@@ -262,28 +278,40 @@ while True:
                 Activar_Mostrar_Corazones = True
             ventana.blit(Puntuacion_Total.Palabra, (Puntuacion_Total.posX, Puntuacion_Total.posY))
 
-        if blitea_2 and not Cero_mas_2:
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
-        if Cero_mas:
+        if Cero_Izquierda:
             ventana.blit(Cero_Extra.Palabra, (Cero_Extra.posX, Cero_Extra.posY))
-        if Cero_mas_2:
+
+        if Cero_Izquierda_Segundos:
+            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX - 30, Cero_Extra_2.posY))
+
+        if Cero_Derecha:
             ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
-        if Cero_mas_3:
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
-            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
-        if Cero_mas_4:
-            ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 33, Tiempo_Segundos.posY))
-            ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX - 37, Cero_Extra_2.posY))
+
+        if Normal_Minutos:
+            if M >= 10:
+                ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX - 17, Tiempo_Minutos.posY))
+            if 0 <= M < 10:
+                ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
+
+        if Normal_Segundos:
+            if 0 <= S < 10:
+                Cero_Izquierda_Segundos = True
+                ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 42, Tiempo_Segundos.posY))
+            if S >= 10:
+                Cero_Izquierda_Segundos = False
+                ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 2, Tiempo_Segundos.posY))
+
+
+
+
+
         if Blitea:
             ventana.blit(x_1.Palabra, (x_1.posX, x_1.posY))
             ventana.blit(Numero.Palabra, (Numero.posX, Numero.posY))
+
         if Blitea_3:
             ventana.blit(Mostrador_Puntos_Habilidad.Palabra, (Mostrador_Puntos_Habilidad.posX, Mostrador_Puntos_Habilidad.posY))
+
         if Blitea_4:
             if Mostrar_sumador < 800:
                 Mostrador_Puntos_Habilidad = Palabra(310, 395, Colores["Naranja"], Lista_Estilos[0], 60)
@@ -391,37 +419,38 @@ while True:
             Puntuacion_Moneda = Palabra(335, 295, Colores["Verde"], str(Puntuacion_Monedas), 60)
 
     if Activar_Mostrar_Tiempo and frames_Tiempo + 20 < frames_totales:
-        Cero_mas = True
-        S += 1
         if S == 60:
             M += 1
             S -= 60
-        if 0 < S < 10:
-            blitea_2 = False
-            Cero_mas_4 = True
-        if S >= 10:
-            blitea_2 = True
-            Cero_mas_4 = False
+        if M >= 10:
+            Cero_Izquierda = False
+            Normal_Minutos = True
+        if 0 <= M < 10:
+            Normal_Minutos = False
+            Cero_Izquierda = True
         if S + (M * 60) == Segundos:
-            if M > 10:
-                Cero_mas = False
-            if S < 10:
-                Cero_mas_2 = True
-                Cero_Extra_2.posX -= 40
+            if 0 <= S < 10:
+                Cero_Izquierda_Segundos = True
+            if M < 10:
+                Cero_Izquierda = True
             Activar_Mostrar_Tiempo = False
             Activar_Animacion_Corazones = True
+        Normal_Minutos = True
+        Normal_Segundos = True
         Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
         Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
+        S += 1
         Base.Grupo.add(Dos_Puntos_6)
 
     if Activar_Animacion_Tiempo and frames_Tiempo + 70 < frames_totales:
-        Cero_mas_2 = False
         if M == 0:
             termine = True
+        if 0 <= M < 10:
+            Cero_Izquierda = True
+
         if termine and S == 0:
             S = 0
-            Cero_mas_2 = True
-            Cero_mas_3 = False
+            Cero_Izquierda_Segundos = True
             Activar_Animacion_Tiempo = False
             Activar_Borrar_Todo = True
             frames_Borrar = frames_totales
@@ -432,11 +461,9 @@ while True:
             S -= 1
             Hacer_Cuentas = True
         if 0 < S < 10:
-            blitea_2 = False
-            Cero_mas_3 = True
+            Cero_Izquierda_Segundos = True
         if S >= 10:
-            blitea_2 = True
-            Cero_mas_3 = False
+            Cero_Izquierda_Segundos = False
         Tiempo_Segundos = Palabra(340, 495, Colores["Rojo"], str(S), 60)
         Tiempo_Minutos = Palabra(280, 495, Colores["Rojo"], str(M), 60)
 
