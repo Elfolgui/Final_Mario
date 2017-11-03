@@ -33,7 +33,7 @@ frames_totales = 0
 
 Corazones = 4
 
-cantidad_monedas = 10
+cantidad_monedas = 16
 
 posicion = 0
 
@@ -172,7 +172,7 @@ M = 0
 
 S = 0
 
-Segundos = 180
+Segundos = 290
 
 Sumador = 0
 
@@ -270,10 +270,10 @@ while True:
         if Cero_mas_2:
             ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
             ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
+            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
         if Cero_mas_3:
             ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
-            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX + 28, Tiempo_Segundos.posY))
+            ventana.blit(Tiempo_Segundos.Palabra, (Tiempo_Segundos.posX, Tiempo_Segundos.posY))
             ventana.blit(Cero_Extra_2.Palabra, (Cero_Extra_2.posX, Cero_Extra_2.posY))
         if Cero_mas_4:
             ventana.blit(Tiempo_Minutos.Palabra, (Tiempo_Minutos.posX, Tiempo_Minutos.posY))
@@ -367,7 +367,6 @@ while True:
         if Mostrador != Total_Monedas + 1:
             Mostrador += 1
         if Total_Monedas + 1 == Mostrador:
-            Mostrador = 10
             Mostrar_Monedas = False
             Activar_Mostrar_Puntos_Habilidad = True
 
