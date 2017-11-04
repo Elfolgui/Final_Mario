@@ -223,6 +223,8 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Puntos_Habilidad, Puntos
         if Resultado == "Ranking":
             rank = True
             ultimos_frames = frames_totales
+        if Resultado == "Termine":
+            return True
 
         Controlador.rellenar_pantalla(ventana, Colores)
         Base.Grupo.draw(ventana)
@@ -327,8 +329,9 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Puntos_Habilidad, Puntos
         if rank:
             if ultimos_frames + 100 > frames_totales:
                 Controlador.Rankeador(Colores, ventana)
-            if ultimos_frames + 100 < frames_totales:
+            else:
                 Controlador.Ranking(Ranking, Rank, Colores, ventana)
+
 
         if Activar_Mostrar_Corazones and Corazones > 0 and frames_mostrar_Corazones + 50 < frames_totales and frames_cantidad_Corazones + 50 < frames_totales:
             frames_cantidad_Corazones = frames_totales
@@ -474,9 +477,9 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Puntos_Habilidad, Puntos
                 Puntuacion_Habilidad += 100
 
         if Hacer_Cuentas:
-            Restador = int(Puntos_Totales/(Cantidad_Tiempo + 200))
+            Restador = int(Puntos_Totales / (Cantidad_Tiempo + 200))
 
-        if Hacer_Cuentas and Total_Total + 1 <= Puntos_Totales:
+        if Hacer_Cuentas and Total_Total <= Puntos_Totales:
             Puntos_Totales -= Restador
             Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 

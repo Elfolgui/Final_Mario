@@ -45,6 +45,8 @@ class Controlador(object):
                     return "Puntuacion_Total"
                 if not es1:
                     return "Ranking"
+            if evento.type == pygame.KEYDOWN and evento.key == pygame.K_BACKSPACE:
+                return "Termine"
 
 
     @classmethod
