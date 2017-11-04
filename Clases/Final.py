@@ -1,6 +1,6 @@
 from Clases import *
 
-def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Posicion_Mastil, Signos, Hizo_Algo, Rank):
+def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Puntos_Habilidad, Puntos_Finales, Rank):
     Controlador.iniciar()
 
     Colores = {'Negro': (0, 0, 0), "Blanco": (255, 255, 255), "Verde": (50, 205, 50),
@@ -159,11 +159,10 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Posicion_Mastil, Signos,
     Moneda_1 = Sprite(300, 300, 40, 40, "Moneda_1.png")
     Moneda = Sprite(300, 300, 40, 40, "Moneda_1.png")
 
-    Puntos_Totales = 0
-
     Restador = 0
+    Puntos_Totales = 0
     Restar = 0
-    Total_Total = 1900000000000000000
+    Total_Total = Puntos_Finales
 
     Puntuacion_Corazones = 0
     Puntuacion_Monedas = 0
@@ -196,8 +195,6 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Posicion_Mastil, Signos,
 
     Lista_Estilos = ("malo", "bueno", "muy bueno", "excelente")
 
-    Puntos_Habilidad = (Posicion_Mastil * 4 + Signos * 100 + Hizo_Algo)
-
     Ranking = Palabra(0, 250, Colores["Blanco"], str(Rank), 150)
 
     sumador_aux = 70
@@ -224,7 +221,6 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Posicion_Mastil, Signos,
             Activar_Borrar_Todo = False
             estado1 = False
         if Resultado == "Ranking":
-            print("Entre")
             rank = True
             ultimos_frames = frames_totales
 
@@ -433,7 +429,6 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Posicion_Mastil, Signos,
                 termine = True
             if 0 <= M < 10:
                 Cero_Izquierda = True
-
             if termine and S == 0:
                 S = 0
                 Cero_Izquierda_Segundos = True
@@ -478,18 +473,10 @@ def Final(Corazones, Cantidad_Monedas, Cantidad_Tiempo, Posicion_Mastil, Signos,
                 Puntos_Totales += 100
                 Puntuacion_Habilidad += 100
 
-        if Hacer_Cuentas and aux_3:
-            if Hizo_Algo:
-                Hizo_Algo = 2500
-            else:
-                Hizo_Algo = 0
-            Total_Total = int(
-                ((Puntuacion_Corazones + (Puntuacion_Habilidad + Hizo_Algo) + Puntuacion_Monedas) / Cantidad_Tiempo) * 100)
-            Restar = Puntos_Totales - Total_Total
-            Restador = int((Restar / Cantidad_Tiempo))
-            aux_3 = False
+        if Hacer_Cuentas:
+            Restador = int(Puntos_Totales/(Cantidad_Tiempo + 200))
 
-        if Total_Total <= Puntos_Totales:
+        if Hacer_Cuentas and Total_Total + 1 <= Puntos_Totales:
             Puntos_Totales -= Restador
             Puntuacion_Total = Palabra(740, 45, Colores["Blanco"], str(Puntos_Totales), 80)
 

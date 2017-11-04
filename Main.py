@@ -4,13 +4,13 @@ Corazones = 4
 
 cantidad_monedas = 16
 
-Segundos = 550
+Segundos = 120
 
-Mastil_Posicion = 400
-Cantidad_Signos = 4
-Hizo_algo = False
+Puntos_Habilidad = 2000
 
 Posicion_Ranking = 598
 
+Puntos_Finales = 7000
+
 while True:
-    Final(Corazones, cantidad_monedas, Segundos, Mastil_Posicion, Cantidad_Signos, Hizo_algo, Posicion_Ranking)
+    Final(Corazones, cantidad_monedas, Segundos, Puntos_Habilidad, Puntos_Finales, Posicion_Ranking)
